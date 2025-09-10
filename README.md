@@ -1,3 +1,4 @@
+#### This a fork from my own organization ignexai, just to have it publicly available on my profile repositories
 # AquaPP
 
 AquaPP is a .NET Avalonia UI application designed to provide a comprehensive solution for water quality management and treatment process optimization. It offers features for data entry, chat-based interactions, and dashboard visualizations to help users monitor and manage water-related data efficiently.
