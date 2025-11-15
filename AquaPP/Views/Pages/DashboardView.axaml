@@ -1,0 +1,357 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dashboard="clr-namespace:AquaPP.Core.Features.Dashboard"
+             xmlns:i="https://github.com/projektanker/icons.avalonia"
+             xmlns:suki="https://github.com/kikipoulet/SukiUI"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+             x:Class="AquaPP.Views.Pages.DashboardView"
+             x:DataType="dashboard:DashboardViewModel">
+    
+    <Design.DataContext>
+        <dashboard:DashboardViewModel />
+    </Design.DataContext>
+
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="20">
+            <!-- Header -->
+            <suki:GlassCard>
+                <Grid ColumnDefinitions="*,Auto" Height="60">
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="4">
+                        <TextBlock Text="Dashboard" 
+                                   FontSize="24" 
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource SukiText}" />
+                        <TextBlock Text="Overview of water quality metrics" 
+                                   FontSize="13"
+                                   Foreground="{DynamicResource SukiLowText}" />
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="1" 
+                                Orientation="Horizontal" 
+                                Spacing="12"
+                                VerticalAlignment="Center">
+                        <Button Classes="Flat">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <i:Icon Value="fa-solid fa-arrows-rotate" FontSize="14" />
+                                <TextBlock Text="Refresh" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </suki:GlassCard>
+
+            <!-- Stats Cards -->
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="16">
+                <!-- Total Readings Card -->
+                <suki:GlassCard Grid.Column="0">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Border Background="{DynamicResource SukiPrimaryColor}"
+                                    CornerRadius="8"
+                                    Width="40"
+                                    Height="40"
+                                    VerticalAlignment="Center">
+                                <i:Icon Value="fa-solid fa-database" 
+                                        FontSize="20"
+                                        Foreground="White"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                            </Border>
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Total Readings" 
+                                           FontSize="12"
+                                           Foreground="{DynamicResource SukiLowText}" />
+                                <TextBlock Text="1,234" 
+                                           FontSize="24"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+                        </StackPanel>
+                        <TextBlock Text="+12% from last month" 
+                                   FontSize="11"
+                                   Foreground="Green" />
+                    </StackPanel>
+                </suki:GlassCard>
+
+                <!-- Locations Card -->
+                <suki:GlassCard Grid.Column="1">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Border Background="#FF6B35"
+                                    CornerRadius="8"
+                                    Width="40"
+                                    Height="40"
+                                    VerticalAlignment="Center">
+                                <i:Icon Value="fa-solid fa-map-marker-alt" 
+                                        FontSize="20"
+                                        Foreground="White"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                            </Border>
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Locations" 
+                                           FontSize="12"
+                                           Foreground="{DynamicResource SukiLowText}" />
+                                <TextBlock Text="24" 
+                                           FontSize="24"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+                        </StackPanel>
+                        <TextBlock Text="Active monitoring sites" 
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SukiLowText}" />
+                    </StackPanel>
+                </suki:GlassCard>
+
+                <!-- Avg pH Card -->
+                <suki:GlassCard Grid.Column="2">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Border Background="#4ECDC4"
+                                    CornerRadius="8"
+                                    Width="40"
+                                    Height="40"
+                                    VerticalAlignment="Center">
+                                <i:Icon Value="fa-solid fa-flask" 
+                                        FontSize="20"
+                                        Foreground="White"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                            </Border>
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Avg pH" 
+                                           FontSize="12"
+                                           Foreground="{DynamicResource SukiLowText}" />
+                                <TextBlock Text="7.2" 
+                                           FontSize="24"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+                        </StackPanel>
+                        <TextBlock Text="Within normal range" 
+                                   FontSize="11"
+                                   Foreground="Green" />
+                    </StackPanel>
+                </suki:GlassCard>
+
+                <!-- Alerts Card -->
+                <suki:GlassCard Grid.Column="3">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Border Background="#FF4757"
+                                    CornerRadius="8"
+                                    Width="40"
+                                    Height="40"
+                                    VerticalAlignment="Center">
+                                <i:Icon Value="fa-solid fa-triangle-exclamation" 
+                                        FontSize="20"
+                                        Foreground="White"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                            </Border>
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Alerts" 
+                                           FontSize="12"
+                                           Foreground="{DynamicResource SukiLowText}" />
+                                <TextBlock Text="3" 
+                                           FontSize="24"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+                        </StackPanel>
+                        <TextBlock Text="Requires attention" 
+                                   FontSize="11"
+                                   Foreground="#FF4757" />
+                    </StackPanel>
+                </suki:GlassCard>
+            </Grid>
+
+            <!-- Charts Section -->
+            <Grid ColumnDefinitions="2*,*" ColumnSpacing="16">
+                <!-- Recent Readings Chart -->
+                <suki:GlassCard Grid.Column="0">
+                    <StackPanel Spacing="16">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <i:Icon Value="fa-solid fa-chart-line" 
+                                    FontSize="18"
+                                    Foreground="{DynamicResource SukiPrimaryColor}"
+                                    VerticalAlignment="Center" />
+                            <TextBlock Text="Recent Readings Trend" 
+                                       FontSize="16" 
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                        
+                        <Separator />
+                        
+                        <!-- Placeholder for chart -->
+                        <Border Height="300"
+                                Background="{DynamicResource SukiBackground}"
+                                CornerRadius="8"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource SukiLightBorderBrush}">
+                            <TextBlock Text="Chart visualization will go here"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource SukiLowText}" />
+                        </Border>
+                    </StackPanel>
+                </suki:GlassCard>
+
+                <!-- Quick Stats -->
+                <suki:GlassCard Grid.Column="1">
+                    <StackPanel Spacing="16">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <i:Icon Value="fa-solid fa-gauge-high" 
+                                    FontSize="18"
+                                    Foreground="{DynamicResource SukiPrimaryColor}"
+                                    VerticalAlignment="Center" />
+                            <TextBlock Text="Quick Stats" 
+                                       FontSize="16" 
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                        
+                        <Separator />
+                        
+                        <StackPanel Spacing="16">
+                            <!-- Conductivity -->
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Avg Conductivity" 
+                                           FontSize="12"
+                                           Foreground="{DynamicResource SukiLowText}" />
+                                <TextBlock Text="450 µS/cm" 
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                                <ProgressBar Value="75" Maximum="100" />
+                            </StackPanel>
+                            
+                            <!-- Turbidity -->
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Avg Turbidity" 
+                                           FontSize="12"
+                                           Foreground="{DynamicResource SukiLowText}" />
+                                <TextBlock Text="2.3 NTU" 
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                                <ProgressBar Value="45" Maximum="100" />
+                            </StackPanel>
+                            
+                            <!-- Chlorine -->
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Avg Chlorine" 
+                                           FontSize="12"
+                                           Foreground="{DynamicResource SukiLowText}" />
+                                <TextBlock Text="0.8 mg/L" 
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                                <ProgressBar Value="60" Maximum="100" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </suki:GlassCard>
+            </Grid>
+
+            <!-- Recent Activity -->
+            <suki:GlassCard>
+                <StackPanel Spacing="16">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <i:Icon Value="fa-solid fa-clock-rotate-left" 
+                                FontSize="18"
+                                Foreground="{DynamicResource SukiPrimaryColor}"
+                                VerticalAlignment="Center" />
+                        <TextBlock Text="Recent Activity" 
+                                   FontSize="16" 
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                    
+                    <Separator />
+                    
+                    <StackPanel Spacing="12">
+                        <!-- Activity Item 1 -->
+                        <Border Background="{DynamicResource SukiBackground}"
+                                CornerRadius="6"
+                                Padding="12">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <i:Icon Grid.Column="0"
+                                        Value="fa-solid fa-plus-circle" 
+                                        FontSize="16"
+                                        Foreground="Green"
+                                        VerticalAlignment="Center"
+                                        Margin="0,0,12,0" />
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock Text="New reading added at Location A" 
+                                               FontSize="13"
+                                               FontWeight="SemiBold" />
+                                    <TextBlock Text="pH: 7.2, Conductivity: 450 µS/cm" 
+                                               FontSize="11"
+                                               Foreground="{DynamicResource SukiLowText}" />
+                                </StackPanel>
+                                <TextBlock Grid.Column="2"
+                                           Text="2 min ago" 
+                                           FontSize="11"
+                                           Foreground="{DynamicResource SukiLowText}"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                        
+                        <!-- Activity Item 2 -->
+                        <Border Background="{DynamicResource SukiBackground}"
+                                CornerRadius="6"
+                                Padding="12">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <i:Icon Grid.Column="0"
+                                        Value="fa-solid fa-file-export" 
+                                        FontSize="16"
+                                        Foreground="{DynamicResource SukiPrimaryColor}"
+                                        VerticalAlignment="Center"
+                                        Margin="0,0,12,0" />
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock Text="Data exported to CSV" 
+                                               FontSize="13"
+                                               FontWeight="SemiBold" />
+                                    <TextBlock Text="150 readings exported" 
+                                               FontSize="11"
+                                               Foreground="{DynamicResource SukiLowText}" />
+                                </StackPanel>
+                                <TextBlock Grid.Column="2"
+                                           Text="1 hour ago" 
+                                           FontSize="11"
+                                           Foreground="{DynamicResource SukiLowText}"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                        
+                        <!-- Activity Item 3 -->
+                        <Border Background="{DynamicResource SukiBackground}"
+                                CornerRadius="6"
+                                Padding="12">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <i:Icon Grid.Column="0"
+                                        Value="fa-solid fa-triangle-exclamation" 
+                                        FontSize="16"
+                                        Foreground="Orange"
+                                        VerticalAlignment="Center"
+                                        Margin="0,0,12,0" />
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock Text="Alert: High turbidity detected" 
+                                               FontSize="13"
+                                               FontWeight="SemiBold" />
+                                    <TextBlock Text="Location B - 5.2 NTU (threshold: 5.0)" 
+                                               FontSize="11"
+                                               Foreground="{DynamicResource SukiLowText}" />
+                                </StackPanel>
+                                <TextBlock Grid.Column="2"
+                                           Text="3 hours ago" 
+                                           FontSize="11"
+                                           Foreground="{DynamicResource SukiLowText}"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </suki:GlassCard>
+        </StackPanel>
+    </ScrollViewer>
+    
+</UserControl>

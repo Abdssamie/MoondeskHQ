@@ -4,20 +4,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:chat="clr-namespace:AquaPP.ViewModels.Pages"
              xmlns:controls="clr-namespace:AquaPP.Controls"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:suki="https://github.com/kikipoulet/SukiUI"
+             xmlns:i="https://github.com/projektanker/icons.avalonia"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
              x:Class="AquaPP.Views.Pages.ChatView"
              x:DataType="chat:ChatViewModel">
 
    <Design.DataContext>
-       <!-- This only sets the DataContext for the previewer in an IDE,
-            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
        <chat:ChatViewModel />
    </Design.DataContext>
 
-   <controls:ChatUI Messages="{Binding Messages}"
-                   Text="{Binding Message, Mode=TwoWay}"
-                   SendCommand="{Binding SendCommand}"
-                   UserImageSource="{Binding UserImage}"
-                   FriendImageSource="{Binding AgentImage}" />
+   <Grid RowDefinitions="Auto,*" Margin="20">
+       <!-- Header -->
+       <suki:GlassCard Grid.Row="0" Margin="0,0,0,16">
+           <Grid ColumnDefinitions="Auto,*,Auto" Height="60">
+               <StackPanel Grid.Column="0" 
+                           Orientation="Horizontal" 
+                           Spacing="12"
+                           VerticalAlignment="Center">
+                   <i:Icon Value="fa-solid fa-robot" 
+                           FontSize="24"
+                           Foreground="{DynamicResource SukiPrimaryColor}" />
+                   <StackPanel Spacing="4">
+                       <TextBlock Text="AI Assistant" 
+                                  FontSize="20" 
+                                  FontWeight="Bold"
+                                  Foreground="{DynamicResource SukiText}" />
+                       <TextBlock Text="Ask questions about water treatment" 
+                                  FontSize="12"
+                                  Foreground="{DynamicResource SukiLowText}" />
+                   </StackPanel>
+               </StackPanel>
+               
+               <StackPanel Grid.Column="2" 
+                           Orientation="Horizontal" 
+                           Spacing="8"
+                           VerticalAlignment="Center">
+                   <Border Background="{DynamicResource SukiPrimaryColor}"
+                           CornerRadius="12"
+                           Padding="8,4">
+                       <TextBlock Text="Powered by Gemini" 
+                                  FontSize="11"
+                                  Foreground="White"
+                                  FontWeight="SemiBold" />
+                   </Border>
+               </StackPanel>
+           </Grid>
+       </suki:GlassCard>
+
+       <!-- Chat Interface -->
+       <suki:GlassCard Grid.Row="1">
+           <controls:ChatUI Messages="{Binding Messages}"
+                            Text="{Binding Message, Mode=TwoWay}"
+                            SendCommand="{Binding SendCommand}"
+                            UserImageSource="{Binding UserImage}"
+                            FriendImageSource="{Binding AgentImage}" />
+       </suki:GlassCard>
+   </Grid>
 
 </UserControl>

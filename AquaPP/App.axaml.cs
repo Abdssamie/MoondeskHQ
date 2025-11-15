@@ -103,12 +103,12 @@ public partial class App : Application
             .AddView<MainWindowView, MainWindowViewModel>(services)
 
             // Add pages
-            .AddView<DashboardView, DashboardViewModel>(services)
+            .AddView<Views.Pages.DashboardView, DashboardViewModel>(services)
             .AddView<DialogView, DialogViewModel>(services)
-            .AddView<ChatView, ChatViewModel>(services)
+            .AddView<Views.Pages.ChatView, ChatViewModel>(services)
             .AddView<SimpleAppView, SimpleAppViewModel>(services)
-            .AddView<SettingsView, SettingsViewModel>(services)
-            .AddView<DataEntryView, DataEntryViewModel>(services);
+            .AddView<Views.Pages.SettingsView, SettingsViewModel>(services)
+            .AddView<Views.Pages.DataEntryView, DataEntryViewModel>(services);
     }
     
     private static ServiceProvider ConfigureServices(ServiceCollection collection)

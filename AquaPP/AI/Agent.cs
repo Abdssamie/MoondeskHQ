@@ -70,13 +70,6 @@ public class Agent : IAgent
 
     public async Task<ChatMessageContent> SendMessage(string message)
     {
-        var googleApiKey = Environment.GetEnvironmentVariable("GOOGLE_API_KEY");
-        if (string.IsNullOrEmpty(googleApiKey))
-        {
-            _logger.Warning("Cannot send message - Google API Key not configured.");
-            throw new InvalidOperationException("Google API Key not configured. Please set the GOOGLE_API_KEY environment variable.");
-        }
-
         // Add the user's message to the history
         _history.AddUserMessage(message); // Use the 'message' parameter, not hardcoded "Hello, how are you?"
 

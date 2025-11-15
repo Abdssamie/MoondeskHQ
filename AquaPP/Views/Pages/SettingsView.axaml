@@ -3,7 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:AquaPP.ViewModels.Pages"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:i="https://github.com/projektanker/icons.avalonia"
+             xmlns:suki="https://github.com/kikipoulet/SukiUI"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
              x:Class="AquaPP.Views.Pages.SettingsView"
              x:DataType="pages:SettingsViewModel">
     
@@ -11,13 +13,191 @@
         <pages:SettingsViewModel />
     </Design.DataContext>
 
-    <StackPanel>
-        <TextBlock Text="Settings" FontSize="24" HorizontalAlignment="Center" Margin="10"/>
-        <ComboBox ItemsSource="{Binding Themes}"
-                  Width="200"
-                  SelectedItem="{Binding SelectedTheme}"
-                  HorizontalAlignment="Left"
-                  Margin="10"/>
-    </StackPanel>
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="20" MaxWidth="800">
+            <!-- Header -->
+            <suki:GlassCard>
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Settings" 
+                               FontSize="24" 
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource SukiText}" />
+                    <TextBlock Text="Configure your application preferences" 
+                               FontSize="13"
+                               Foreground="{DynamicResource SukiLowText}" />
+                </StackPanel>
+            </suki:GlassCard>
+
+            <!-- Appearance Section -->
+            <suki:GlassCard>
+                <StackPanel Spacing="16">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <i:Icon Value="fa-solid fa-palette" 
+                                FontSize="20"
+                                Foreground="{DynamicResource SukiPrimaryColor}"
+                                VerticalAlignment="Center" />
+                        <TextBlock Text="Appearance" 
+                                   FontSize="18" 
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                    
+                    <Separator />
+                    
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Theme" 
+                                       FontWeight="SemiBold"
+                                       FontSize="14" />
+                            <TextBlock Text="Choose your preferred color theme" 
+                                       FontSize="12"
+                                       Foreground="{DynamicResource SukiLowText}" />
+                        </StackPanel>
+                        
+                        <ComboBox Grid.Column="1"
+                                  ItemsSource="{Binding Themes}"
+                                  SelectedItem="{Binding SelectedTheme}"
+                                  MinWidth="200"
+                                  VerticalAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+            </suki:GlassCard>
+
+            <!-- Data Management Section -->
+            <suki:GlassCard>
+                <StackPanel Spacing="16">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <i:Icon Value="fa-solid fa-database" 
+                                FontSize="20"
+                                Foreground="{DynamicResource SukiPrimaryColor}"
+                                VerticalAlignment="Center" />
+                        <TextBlock Text="Data Management" 
+                                   FontSize="18" 
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                    
+                    <Separator />
+                    
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="16">
+                        <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Auto-save" 
+                                       FontWeight="SemiBold"
+                                       FontSize="14" />
+                            <TextBlock Text="Automatically save changes as you work" 
+                                       FontSize="12"
+                                       Foreground="{DynamicResource SukiLowText}" />
+                        </StackPanel>
+                        
+                        <ToggleSwitch Grid.Row="0" Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="True" />
+                        
+                        <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Backup on exit" 
+                                       FontWeight="SemiBold"
+                                       FontSize="14" />
+                            <TextBlock Text="Create a backup when closing the application" 
+                                       FontSize="12"
+                                       Foreground="{DynamicResource SukiLowText}" />
+                        </StackPanel>
+                        
+                        <ToggleSwitch Grid.Row="1" Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="False" />
+                    </Grid>
+                </StackPanel>
+            </suki:GlassCard>
+
+            <!-- Notifications Section -->
+            <suki:GlassCard>
+                <StackPanel Spacing="16">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <i:Icon Value="fa-solid fa-bell" 
+                                FontSize="20"
+                                Foreground="{DynamicResource SukiPrimaryColor}"
+                                VerticalAlignment="Center" />
+                        <TextBlock Text="Notifications" 
+                                   FontSize="18" 
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                    
+                    <Separator />
+                    
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="16">
+                        <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Show notifications" 
+                                       FontWeight="SemiBold"
+                                       FontSize="14" />
+                            <TextBlock Text="Display toast notifications for important events" 
+                                       FontSize="12"
+                                       Foreground="{DynamicResource SukiLowText}" />
+                        </StackPanel>
+                        
+                        <ToggleSwitch Grid.Row="0" Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="True" />
+                        
+                        <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Sound alerts" 
+                                       FontWeight="SemiBold"
+                                       FontSize="14" />
+                            <TextBlock Text="Play sound for notifications" 
+                                       FontSize="12"
+                                       Foreground="{DynamicResource SukiLowText}" />
+                        </StackPanel>
+                        
+                        <ToggleSwitch Grid.Row="1" Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="False" />
+                        
+                        <StackPanel Grid.Row="2" Grid.Column="0" Spacing="4">
+                            <TextBlock Text="Error notifications" 
+                                       FontWeight="SemiBold"
+                                       FontSize="14" />
+                            <TextBlock Text="Show notifications for errors and warnings" 
+                                       FontSize="12"
+                                       Foreground="{DynamicResource SukiLowText}" />
+                        </StackPanel>
+                        
+                        <ToggleSwitch Grid.Row="2" Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="True" />
+                    </Grid>
+                </StackPanel>
+            </suki:GlassCard>
+
+            <!-- About Section -->
+            <suki:GlassCard>
+                <StackPanel Spacing="16">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <i:Icon Value="fa-solid fa-circle-info" 
+                                FontSize="20"
+                                Foreground="{DynamicResource SukiPrimaryColor}"
+                                VerticalAlignment="Center" />
+                        <TextBlock Text="About" 
+                                   FontSize="18" 
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                    
+                    <Separator />
+                    
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="AquaPP" 
+                                   FontSize="16"
+                                   FontWeight="SemiBold" />
+                        <TextBlock Text="Version 1.0.0" 
+                                   FontSize="13"
+                                   Foreground="{DynamicResource SukiLowText}" />
+                        <TextBlock Text="Water Quality Management System" 
+                                   FontSize="13"
+                                   Foreground="{DynamicResource SukiLowText}" />
+                    </StackPanel>
+                </StackPanel>
+            </suki:GlassCard>
+        </StackPanel>
+    </ScrollViewer>
     
 </UserControl>

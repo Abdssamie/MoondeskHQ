@@ -4,39 +4,55 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:AquaPP.ViewModels.Pages"
              xmlns:i="https://github.com/projektanker/icons.avalonia"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:suki="https://github.com/kikipoulet/SukiUI"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
              x:Class="AquaPP.Views.Pages.DataEntryView"
              x:DataType="pages:DataEntryViewModel">
 
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key='Light'>
-                    <SolidColorBrush x:Key='HeaderIcon'>DodgerBlue</SolidColorBrush>
-                </ResourceDictionary>
-                <ResourceDictionary x:Key='Dark'>
-                    <SolidColorBrush x:Key='HeaderIcon'>White</SolidColorBrush>
-                </ResourceDictionary>
-            </ResourceDictionary.ThemeDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
     <UserControl.Styles>
+        <Style Selector="DataGridColumnHeader">
+            <Setter Property="Background" Value="{DynamicResource SukiCardBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource SukiText}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="12,8" />
+        </Style>
+        
         <Style Selector="DataGridColumnHeader StackPanel TextBlock">
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="13" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+        
         <Style Selector="DataGridColumnHeader StackPanel i|Icon">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Width" Value="25" />
-            <Setter Property="Height" Value="25" />
-            <Setter Property="Foreground" Value="{DynamicResource HeaderIcon}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="16" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="Foreground" Value="{DynamicResource SukiPrimaryColor}" />
         </Style>
-        <Style Selector="DataGridTextColumn">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="FontWeight" Value="SemiBold" />
+        
+        <Style Selector="DataGridRow">
+            <Setter Property="Height" Value="48" />
+        </Style>
+        
+        <Style Selector="DataGridRow:pointerover /template/ Rectangle#BackgroundRectangle">
+            <Setter Property="Fill" Value="{DynamicResource SukiLightBorderBrush}" />
+        </Style>
+        
+        <Style Selector="DataGridCell">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="12,0" />
+        </Style>
+        
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Padding" Value="16,0" />
+            <Setter Property="CornerRadius" Value="6" />
+        </Style>
+        
+        <Style Selector="Button.PrimaryAction">
+            <Setter Property="Background" Value="{DynamicResource SukiPrimaryColor}" />
+            <Setter Property="Foreground" Value="White" />
         </Style>
     </UserControl.Styles>
 
@@ -44,20 +60,33 @@
         <pages:DataEntryViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto,*,Auto" Margin="10">
-        <Border Grid.Row="0" Margin="0 0 0 10" Padding="15" HorizontalAlignment="Stretch">
-            <Grid ColumnDefinitions="*,*,*" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                <TextBlock Grid.Column="0" Text="Water Quality Data Entry" FontWeight="Bold" FontSize="20"
-                           VerticalAlignment="Center" />
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
-                    <!--<Button Command="{Binding ToggleEditModeCommand}" HorizontalAlignment="Left" Background="{Binding EditModeEnabled, Converter={StaticResource EditModeToIconColorConverterInstance}}">
-                        <Svg HorizontalAlignment="Center" Path="/Assets/edit-button-svgrepo-com(2).svg" Width="20" Height="20"/> 
-                    </Button>-->
+    <Grid RowDefinitions="Auto,*,Auto" Margin="20">
+        <!-- Header Section -->
+        <suki:GlassCard Grid.Row="0" Margin="0,0,0,16">
+            <Grid ColumnDefinitions="Auto,*,Auto" Height="60">
+                <!-- Title -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="4">
+                    <TextBlock Text="Water Quality Data Entry" 
+                               FontWeight="Bold" 
+                               FontSize="20"
+                               Foreground="{DynamicResource SukiText}" />
+                    <TextBlock Text="Record and manage water quality measurements" 
+                               FontSize="12"
+                               Foreground="{DynamicResource SukiLowText}" />
                 </StackPanel>
-                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock Text="Date: " VerticalAlignment="Center" />
+                
+                <!-- Date Picker -->
+                <StackPanel Grid.Column="2" 
+                            Orientation="Horizontal" 
+                            Spacing="12"
+                            VerticalAlignment="Center">
+                    <i:Icon Value="fa-solid fa-calendar" 
+                            FontSize="18"
+                            Foreground="{DynamicResource SukiPrimaryColor}"
+                            VerticalAlignment="Center" />
                     <CalendarDatePicker SelectedDate="{Binding CurrentDate, Mode=TwoWay}"
-                                        CustomDateFormatString="MMMM dd, yyyy">
+                                        CustomDateFormatString="MMMM dd, yyyy"
+                                        Width="200">
                         <Interaction.Behaviors>
                             <EventTriggerBehavior EventName="SelectedDateChanged">
                                 <InvokeCommandAction Command="{Binding SelectedDateChangedCommand}" />
@@ -66,9 +95,10 @@
                     </CalendarDatePicker>
                 </StackPanel>
             </Grid>
-        </Border>
+        </suki:GlassCard>
 
-        <Border Grid.Row="1" BorderThickness="2" BorderBrush="{DynamicResource DataGridBorder}" CornerRadius="5">
+        <!-- Data Grid Section -->
+        <suki:GlassCard Grid.Row="1">
             <Grid>
                 <DataGrid
                     x:Name="ReadingsDataGrid"
@@ -80,71 +110,72 @@
                     SelectionMode="Extended"
                     SelectionChanged="OnDataGridSelectionChanged"
                     HeadersVisibility="Column"
-                    GridLinesVisibility="All"
+                    GridLinesVisibility="Horizontal"
                     PointerPressed="DataGridPointerPressed"
                     HorizontalScrollBarVisibility="Auto"
-                    VerticalScrollBarVisibility="Auto">
+                    VerticalScrollBarVisibility="Auto"
+                    Background="Transparent"
+                    BorderThickness="0">
 
-                    <!-- IsReadOnly="{Binding EditModeEnabled}" -->
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                            FontWeight="Bold"
-                            FontSize="13"
                             Binding="{Binding SampleId}"
-                            Width="180">
+                            Width="160">
                             <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                                     <i:Icon Value="fa-solid fa-key" />
-                                    <TextBlock Text="Timestamp" />
+                                    <TextBlock Text="Sample ID" />
                                 </StackPanel>
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
                         
                         <DataGridTextColumn
-                            FontWeight="Bold"
-                            FontSize="13"
                             Binding="{Binding Timestamp, StringFormat='{}{0:yyyy-MM-dd HH:mm:ss}'}"
-                            Width="180">
+                            Width="170">
                             <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                                     <i:Icon Value="fa-solid fa-clock" />
                                     <TextBlock Text="Timestamp" />
                                 </StackPanel>
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn FontWeight="Bold"
-                                            FontSize="13"
-                                            Binding="{Binding Location}" Width="*" MinWidth="100">
+                        <DataGridTextColumn 
+                            Binding="{Binding Location}" 
+                            Width="*" 
+                            MinWidth="120">
                             <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center"
-                                            HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                                     <i:Icon Value="fa-solid fa-map-marker-alt" />
                                     <TextBlock Text="Location" />
                                 </StackPanel>
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn FontWeight="Bold"
-                                            FontSize="13"
-                                            Binding="{Binding PH}" Width="80">
+                        <DataGridTextColumn 
+                            Binding="{Binding PH}" 
+                            Width="90">
                             <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                                     <i:Icon Value="fa-solid fa-flask" />
                                     <TextBlock Text="pH" />
                                 </StackPanel>
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn FontWeight="Bold"
-                                            FontSize="13"
-                                            Binding="{Binding Conductivity}" Width="120">
+                        <DataGridTextColumn 
+                            Binding="{Binding Conductivity}" 
+                            Width="140">
                             <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                                    <i:Icon Value="fa-solid fa-bolt" />
-                                    <TextBlock Text="Conductivity" />
+                                <StackPanel Orientation="Vertical" Spacing="4">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <i:Icon Value="fa-solid fa-bolt" />
+                                        <TextBlock Text="Conductivity" />
+                                    </StackPanel>
                                     <ComboBox ItemsSource="{Binding ConductivityUnits}"
-                                              SelectedItem="{Binding SelectedConductivityUnit}" >
+                                              SelectedItem="{Binding SelectedConductivityUnit}"
+                                              MinWidth="100"
+                                              FontSize="11">
                                         <Interaction.Behaviors>
                                             <EventTriggerBehavior EventName="SelectionChanged">
                                                 <InvokeCommandAction Command="{Binding UpdateConductivityUnitCommand}"
@@ -156,15 +187,19 @@
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn FontWeight="Bold"
-                                            FontSize="13"
-                                            Binding="{Binding Turbidity}" Width="110">
+                        <DataGridTextColumn 
+                            Binding="{Binding Turbidity}" 
+                            Width="130">
                             <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                                    <i:Icon Value="fa-solid fa-cloud" />
-                                    <TextBlock Text="Turbidity" />
+                                <StackPanel Orientation="Vertical" Spacing="4">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <i:Icon Value="fa-solid fa-cloud" />
+                                        <TextBlock Text="Turbidity" />
+                                    </StackPanel>
                                     <ComboBox ItemsSource="{Binding TurbidityUnits}"
-                                              SelectedItem="{Binding SelectedTurbidityUnit}" >
+                                              SelectedItem="{Binding SelectedTurbidityUnit}"
+                                              MinWidth="90"
+                                              FontSize="11">
                                         <Interaction.Behaviors>
                                             <EventTriggerBehavior EventName="SelectionChanged">
                                                 <InvokeCommandAction Command="{Binding UpdateTurbidityUnitCommand}"
@@ -176,15 +211,19 @@
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn FontWeight="Bold"
-                                            FontSize="13"
-                                            Binding="{Binding ChlorineResidual}" Width="150">
+                        <DataGridTextColumn 
+                            Binding="{Binding ChlorineResidual}" 
+                            Width="160">
                             <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                                    <i:Icon Value="fa-solid fa-vial" />
-                                    <TextBlock Text="Chlorine Residual" />
+                                <StackPanel Orientation="Vertical" Spacing="4">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <i:Icon Value="fa-solid fa-vial" />
+                                        <TextBlock Text="Chlorine" />
+                                    </StackPanel>
                                     <ComboBox ItemsSource="{Binding ChlorineUnits}"
-                                              SelectedItem="{Binding SelectedChlorineUnit}" >
+                                              SelectedItem="{Binding SelectedChlorineUnit}"
+                                              MinWidth="90"
+                                              FontSize="11">
                                         <Interaction.Behaviors>
                                             <EventTriggerBehavior EventName="SelectionChanged">
                                                 <InvokeCommandAction Command="{Binding UpdateChlorineUnitCommand}"
@@ -196,11 +235,12 @@
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn FontWeight="Bold"
-                                            FontSize="13"
-                                            Binding="{Binding Notes}" Width="*" MinWidth="150">
+                        <DataGridTextColumn 
+                            Binding="{Binding Notes}" 
+                            Width="*" 
+                            MinWidth="180">
                             <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                                     <i:Icon Value="fa-solid fa-clipboard" />
                                     <TextBlock Text="Notes" />
                                 </StackPanel>
@@ -208,32 +248,99 @@
                         </DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <TextBlock Text="No readings found for the selected date."
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="20"
-                           FontWeight="Bold"
-                           IsVisible="{Binding ShowNoDataMessage}" />
+                
+                <!-- Empty State -->
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="16"
+                            IsVisible="{Binding ShowNoDataMessage}">
+                    <i:Icon Value="fa-solid fa-droplet-slash" 
+                            FontSize="64"
+                            Foreground="{DynamicResource SukiLowText}"
+                            HorizontalAlignment="Center" />
+                    <TextBlock Text="No readings found for the selected date"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource SukiText}"
+                               HorizontalAlignment="Center" />
+                    <TextBlock Text="Click 'Add Row' to create a new reading"
+                               FontSize="13"
+                               Foreground="{DynamicResource SukiLowText}"
+                               HorizontalAlignment="Center" />
+                </StackPanel>
             </Grid>
-        </Border>
+        </suki:GlassCard>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0" Spacing="10">
-            <Button Content="Add Row" Command="{Binding AddBlankReadingRowCommand}" />
-            <Button Content="Delete Selected" Command="{Binding DeleteSelectedReadingsCommand}" />
-            <Button Content="Save All Readings" Command="{Binding SaveReadingsCommand}" />
-            <Button Content="Load All Current Day Readings" Command="{Binding LoadCurrentDateReadingsCommand}" />
-            <Button Content="Load All Readings" Command="{Binding LoadAllReadingsCommand}" />
-            <Button Content="Export" ToolTip.Tip="Export to csv" Command="{Binding ExportReadingsCommand}"> 
-                <Button.CommandParameter>
-                    <Binding RelativeSource="{RelativeSource Self}" />
-                </Button.CommandParameter>
-            </Button>
-            <!--<Button Content="Import" ToolTip.Tip="Import from csv" Command="{Binding ImportReadingsCommand}">
-                <Button.CommandParameter>
-                    <Binding RelativeSource="{RelativeSource Self}" />
-                </Button.CommandParameter>
-            </Button>-->
-        </StackPanel>
+        <!-- Action Bar -->
+        <suki:GlassCard Grid.Row="2" Margin="0,16,0,0">
+            <Grid ColumnDefinitions="*,Auto" Height="56">
+                <!-- Left Actions -->
+                <StackPanel Grid.Column="0" 
+                            Orientation="Horizontal" 
+                            Spacing="12"
+                            VerticalAlignment="Center">
+                    <Button Classes="ActionButton PrimaryAction" 
+                            Command="{Binding AddBlankReadingRowCommand}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <i:Icon Value="fa-solid fa-plus" FontSize="14" />
+                            <TextBlock Text="Add Row" />
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button Classes="ActionButton" 
+                            Command="{Binding DeleteSelectedReadingsCommand}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <i:Icon Value="fa-solid fa-trash" FontSize="14" />
+                            <TextBlock Text="Delete Selected" />
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button Classes="ActionButton" 
+                            Command="{Binding SaveReadingsCommand}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <i:Icon Value="fa-solid fa-floppy-disk" FontSize="14" />
+                            <TextBlock Text="Save" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                
+                <!-- Right Actions -->
+                <StackPanel Grid.Column="1" 
+                            Orientation="Horizontal" 
+                            Spacing="12"
+                            VerticalAlignment="Center">
+                    <Button Classes="ActionButton" 
+                            Command="{Binding LoadCurrentDateReadingsCommand}"
+                            ToolTip.Tip="Load readings for selected date">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <i:Icon Value="fa-solid fa-calendar-day" FontSize="14" />
+                            <TextBlock Text="Load Today" />
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button Classes="ActionButton" 
+                            Command="{Binding LoadAllReadingsCommand}"
+                            ToolTip.Tip="Load all readings">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <i:Icon Value="fa-solid fa-database" FontSize="14" />
+                            <TextBlock Text="Load All" />
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button Classes="ActionButton" 
+                            Command="{Binding ExportReadingsCommand}"
+                            ToolTip.Tip="Export to CSV">
+                        <Button.CommandParameter>
+                            <Binding RelativeSource="{RelativeSource Self}" />
+                        </Button.CommandParameter>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <i:Icon Value="fa-solid fa-file-export" FontSize="14" />
+                            <TextBlock Text="Export" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </suki:GlassCard>
     </Grid>
 
 </UserControl>
