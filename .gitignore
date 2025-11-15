@@ -5,3 +5,5 @@ riderModule.iml
 /_ReSharper.Caches/
 .idea
 AquaPP.sln.DotSettings.user
+AquaPP/launchSettings.json
+**/launchSettings.json
