@@ -43,19 +43,9 @@
         </i:Icon>
     </sukiUi:SukiWindow.LogoContent>
 
-    <sukiUi:SukiWindow.Hosts>
-        <sukiUi:SukiToastHost Name="ToastHost" />
-    </sukiUi:SukiWindow.Hosts>
-
     <sukiUi:SukiWindow.MenuItems>
         <MenuItem Header="File">
             <MenuItem Header="Open" Command="{Binding OnOpenFile}">
-                <Interaction.Behaviors>
-                    <EventTriggerBehavior EventName="SelectionChanged">
-                        <InvokeCommandAction Command="{Binding OnOpenFile}"
-                                             CommandParameter=""/>
-                    </EventTriggerBehavior>
-                </Interaction.Behaviors>
                 <MenuItem.Icon>
                     <i:Icon Value="fa-solid fa-folder-open" HorizontalAlignment="Center" />
                 </MenuItem.Icon>
@@ -86,7 +76,7 @@
                       Header="Fullscreen"
                       ToolTip.Tip="Makes the app fullscreen.">
                 <MenuItem.Icon>
-                    <i:Icon Value="fa-brands fa-facebook" HorizontalAlignment="Center" />
+                    <i:Icon Value="fa-solid fa-expand" HorizontalAlignment="Center" />
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
@@ -136,10 +126,11 @@
         <sukiUi:SukiSideMenu.HeaderContent>
             <Image Width="80"
                    Height="80"
+                   Source="/Assets/avalonia-logo.ico"
                    Margin="30,10,30,30"
                    Classes="AppIcon"
                    IsVisible="True"
-                   ToolTip.Tip="Click To Toggle Top Menu." />
+                   ToolTip.Tip="AquaPP" />
         </sukiUi:SukiSideMenu.HeaderContent>
         <sukiUi:SukiSideMenu.FooterContent>
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" VerticalAlignment="Stretch">
@@ -156,7 +147,7 @@
                     <Button.CommandParameter>
                         <MultiBinding Converter="{StaticResource ButtonToUrlOpenConverterInstance}">
                             <Binding RelativeSource="{RelativeSource Self}" />
-                            <Binding Source="https://github.com/kikipoulet/SukiUI" />
+                            <Binding Source="https://github.com/Abdssamie/aqua-plus-plus" />
                         </MultiBinding>
                     </Button.CommandParameter>
                     <i:Icon Value="fa-solid fa-question" HorizontalAlignment="Center" />
@@ -165,7 +156,7 @@
                     <Button.CommandParameter>
                         <MultiBinding Converter="{StaticResource ButtonToUrlOpenConverterInstance}">
                             <Binding RelativeSource="{RelativeSource Self}" />
-                            <Binding Source="https://github.com/kikipoulet/SukiUI" />
+                            <Binding Source="https://github.com/Abdssamie/aqua-plus-plus" />
                         </MultiBinding>
                     </Button.CommandParameter>
                     <i:Icon Value="fa-brands fa-facebook" HorizontalAlignment="Center" />
@@ -174,7 +165,7 @@
                     <Button.CommandParameter>
                         <MultiBinding Converter="{StaticResource ButtonToUrlOpenConverterInstance}">
                             <Binding RelativeSource="{RelativeSource Self}" />
-                            <Binding Source="https://github.com/kikipoulet/SukiUI" />
+                            <Binding Source="https://github.com/Abdssamie/aqua-plus-plus" />
                         </MultiBinding>
                     </Button.CommandParameter>
                     <i:Icon Value="fa-brands fa-linkedin" HorizontalAlignment="Center" />

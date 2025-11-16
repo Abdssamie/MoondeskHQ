@@ -4,10 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="using:AquaPP.ViewModels.Pages"
              xmlns:iot="using:AquaPP.Core.Models.IoT"
+             xmlns:converters="clr-namespace:AquaPP.Converters"
              xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
              x:Class="AquaPP.Views.Pages.AssetDirectoryView"
              x:DataType="pages:AssetDirectoryViewModel">
+
+    <UserControl.Resources>
+        <converters:AssetStatusColorConverter x:Key="StatusColorConverter" />
+    </UserControl.Resources>
 
     <Design.DataContext>
         <pages:AssetDirectoryViewModel />
@@ -127,11 +132,6 @@
                                        Binding="{Binding Location}" 
                                        Width="200" />
 
-                    <!-- Status Text -->
-                    <DataGridTextColumn Header="Status" 
-                                       Binding="{Binding Status}" 
-                                       Width="120" />
-
                     <!-- Sensor Count -->
                     <DataGridTemplateColumn Header="Sensors" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
@@ -151,7 +151,7 @@
                     <DataGridTemplateColumn Header="Last Seen" Width="180">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate DataType="iot:Asset">
-                                <TextBlock Text="{Binding LastSeen, StringFormat='{}{0:MMM dd, HH:mm:ss}'}" 
+                                <TextBlock Text="{Binding LastSeen, StringFormat='MMM dd, HH:mm:ss'}"
                                          HorizontalAlignment="Center" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -197,7 +197,7 @@
                     
                     <TextBlock Grid.Row="2" Grid.Column="2" Text="Installed:" FontWeight="Medium" />
                     <TextBlock Grid.Row="2" Grid.Column="3" 
-                             Text="{Binding SelectedAsset.InstallationDate, StringFormat='{}{0:MMM dd, yyyy}'}" />
+                             Text="{Binding SelectedAsset.InstallationDate, StringFormat='MMM dd, yyyy'}" />
                 </Grid>
 
                 <TextBlock Text="{Binding SelectedAsset.Description}" 
