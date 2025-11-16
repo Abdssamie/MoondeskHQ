@@ -90,7 +90,8 @@
             <DataGrid ItemsSource="{Binding Assets}"
                       SelectedItem="{Binding SelectedAsset}"
                       IsReadOnly="True"
-                      AutoGenerateColumns="False">
+                      AutoGenerateColumns="False"
+                      Classes="custom-datagrid">
                 
                 <DataGrid.Columns>
                     

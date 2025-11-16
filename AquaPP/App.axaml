@@ -9,7 +9,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <converters:AssetStatusColorConverter x:Key="StatusColorConverter" />
-            
+
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key='Light'>
                     <SolidColorBrush x:Key='DataGridBackground'>White</SolidColorBrush>
@@ -20,115 +20,13 @@
                     <SolidColorBrush x:Key='DataGridBorder'>White</SolidColorBrush>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
-            
+
         </ResourceDictionary>
     </Application.Resources>
 
     <Application.Styles>
         <StyleInclude Source="avares://SukiUI.Dock/Index.axaml" />
         <sukiUi:SukiTheme ThemeColor="Blue" />
-        
-        <!-- DataGrid Global Styles -->
-        <Style Selector="DataGrid">
-            <!-- Fix column separator visibility -->
-            <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource SukiBorderBrush}" />
-            <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource SukiBorderBrush}" />
-            <Setter Property="GridLinesVisibility" Value="All" />
-            <Setter Property="BorderBrush" Value="{DynamicResource SukiBorderBrush}" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="{DynamicResource SukiBackground}" />
-            <Setter Property="RowBackground" Value="{DynamicResource SukiBackground}" />
-            <Setter Property="CanUserReorderColumns" Value="True" />
-            <Setter Property="CanUserResizeColumns" Value="True" />
-            <Setter Property="CanUserSortColumns" Value="True" />
-        </Style>
-        
-        <!-- Alternating Row Colors -->
-        <Style Selector="DataGridRow:nth-child(2n)">
-            <Setter Property="Background" Value="{DynamicResource SukiCardBackground}" />
-        </Style>
-        
-        <!-- DataGrid Header Styling -->
-        <Style Selector="DataGridColumnHeader">
-            <Setter Property="Background" Value="{DynamicResource SukiCardBackground}" />
-            <Setter Property="Foreground" Value="{DynamicResource SukiText}" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="Padding" Value="12,8" />
-            <Setter Property="BorderBrush" Value="{DynamicResource SukiBorderBrush}" />
-            <Setter Property="BorderThickness" Value="0,0,1,1" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-        </Style>
-        
-        <!-- DataGrid Header Hover Effect -->
-        <Style Selector="DataGridColumnHeader:pointerover">
-            <Setter Property="Background" Value="{DynamicResource SukiPrimaryColor}" />
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        
-        <!-- DataGrid Header Sort Indicator -->
-        <Style Selector="DataGridColumnHeader /template/ Path#SortIcon">
-            <Setter Property="Fill" Value="{DynamicResource SukiPrimaryColor}" />
-            <Setter Property="Margin" Value="4,0,0,0" />
-        </Style>
-        
-        <!-- DataGrid Row Styling -->
-        <Style Selector="DataGridRow">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{DynamicResource SukiBorderBrush}" />
-            <Setter Property="BorderThickness" Value="0,0,0,1" />
-        </Style>
-        
-        <!-- DataGrid Row Hover Effect -->
-        <Style Selector="DataGridRow:pointerover /template/ Rectangle#BackgroundRectangle">
-            <Setter Property="Fill" Value="{DynamicResource SukiPrimaryColor}" />
-            <Setter Property="Opacity" Value="0.15" />
-        </Style>
-        
-        <!-- DataGrid Row Selected State -->
-        <Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
-            <Setter Property="Fill" Value="{DynamicResource SukiPrimaryColor}" />
-            <Setter Property="Opacity" Value="0.25" />
-        </Style>
-        
-        <!-- DataGrid Cell Styling -->
-        <Style Selector="DataGridCell">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{DynamicResource SukiBorderBrush}" />
-            <Setter Property="BorderThickness" Value="0,0,1,0" />
-            <Setter Property="Padding" Value="12,8" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-        </Style>
-        
-        <!-- DataGrid Cell Focus State -->
-        <Style Selector="DataGridCell:focus">
-            <Setter Property="BorderBrush" Value="{DynamicResource SukiPrimaryColor}" />
-            <Setter Property="BorderThickness" Value="2" />
-        </Style>
-        
-        <!-- Column Separator (Gripper) Visibility Fix -->
-        <Style Selector="DataGridColumnHeader /template/ Thumb#PART_LeftHeaderGripper">
-            <Setter Property="Background" Value="{DynamicResource SukiBorderBrush}" />
-            <Setter Property="Width" Value="1" />
-            <Setter Property="Cursor" Value="SizeWestEast" />
-        </Style>
-        
-        <Style Selector="DataGridColumnHeader /template/ Thumb#PART_RightHeaderGripper">
-            <Setter Property="Background" Value="{DynamicResource SukiBorderBrush}" />
-            <Setter Property="Width" Value="1" />
-            <Setter Property="Cursor" Value="SizeWestEast" />
-        </Style>
-        
-        <!-- Make grippers more visible on hover -->
-        <Style Selector="DataGridColumnHeader /template/ Thumb#PART_LeftHeaderGripper:pointerover">
-            <Setter Property="Background" Value="{DynamicResource SukiPrimaryColor}" />
-            <Setter Property="Width" Value="2" />
-        </Style>
-        
-        <Style Selector="DataGridColumnHeader /template/ Thumb#PART_RightHeaderGripper:pointerover">
-            <Setter Property="Background" Value="{DynamicResource SukiPrimaryColor}" />
-            <Setter Property="Width" Value="2" />
-        </Style>
+        <StyleInclude Source="avares://AquaPP/Themes/DataGridStyles.axaml" />
     </Application.Styles>
 </Application>

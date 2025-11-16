@@ -1,0 +1,67 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="ThemeDataGridRowSeparatorBrush" Color="#D6D6D6" />
+
+    <!-- Style for the DataGrid control -->
+    <Style Selector="DataGrid.custom-datagrid">
+        <Setter Property="Background" Value="{DynamicResource SukiCardBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SukiBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="RowHeight" Value="40" />
+        <Setter Property="HeadersVisibility" Value="Column" />
+        <Setter Property="CanUserResizeColumns" Value="True" />
+        <Setter Property="CanUserSortColumns" Value="True" />
+        <Setter Property="GridLinesVisibility" Value="All" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource ThemeDataGridRowSeparatorBrush}" />
+    </Style>
+
+    <!-- Style for DataGridRow -->
+    <Style Selector="DataGrid.custom-datagrid DataGridRow">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource SukiText}" />
+    </Style>
+
+    <!-- Style for alternating rows -->
+    <Style Selector="DataGrid.custom-datagrid DataGridRow:nth-child(odd)">
+        <Setter Property="Background" Value="{DynamicResource SukiCardBackground}" />
+    </Style>
+
+    <Style Selector="DataGrid.custom-datagrid DataGridRow:nth-child(even)">
+        <Setter Property="Background" Value="{DynamicResource SukiControlBackground}" />
+    </Style>
+
+    <!-- Style for row when pointer is over -->
+    <Style Selector="DataGrid.custom-datagrid DataGridRow:pointerover">
+        <Setter Property="Background" Value="{DynamicResource SukiPrimaryColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource SukiLightText}" />
+    </Style>
+
+    <!-- Style for selected rows -->
+    <Style Selector="DataGrid.custom-datagrid DataGridRow:selected">
+        <Setter Property="Background" Value="{DynamicResource SukiPrimaryColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource SukiLightText}" />
+    </Style>
+
+    <!-- Style for DataGridColumnHeader -->
+    <Style Selector="DataGrid.custom-datagrid DataGridColumnHeader">
+        <Setter Property="Background" Value="{DynamicResource SukiCardBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource SukiText}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Height" Value="45" />
+        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SeparatorBrush" Value="{DynamicResource ThemeDataGridRowSeparatorBrush}" />
+    </Style>
+
+    <!-- Style for DataGridCell -->
+    <Style Selector="DataGrid.custom-datagrid DataGridCell">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource SukiText}" />
+        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SukiBorderBrush}" />
+    </Style>
+
+</ResourceDictionary>

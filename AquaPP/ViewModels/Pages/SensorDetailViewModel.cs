@@ -56,6 +56,9 @@ public partial class SensorDetailViewModel : PageBase
     [ObservableProperty]
     private string _statusColor = "#9E9E9E";
 
+    [ObservableProperty]
+    private ObservableCollection<SensorReading> _sensorReadings = new();
+
     public SensorDetailViewModel(
         ISensorRepository sensorRepository,
         IDataStreamService dataStreamService,
@@ -105,6 +108,13 @@ public partial class SensorDetailViewModel : PageBase
 
             // Calculate statistics from readings
             await CalculateStatisticsAsync();
+
+            // Populate sensor readings for the DataGrid
+            SensorReadings.Clear();
+            foreach (var reading in sensor.Readings.OrderByDescending(r => r.Timestamp))
+            {
+                SensorReadings.Add(reading);
+            }
 
             _logger.LogInformation("Successfully loaded sensor: {SensorName}", sensor.Name);
         }

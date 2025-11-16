@@ -14,7 +14,7 @@
     </Design.DataContext>
 
     <ScrollViewer>
-        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Margin="20" RowSpacing="20">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto" Margin="20" RowSpacing="20">
             
             <!-- Header -->
             <suki:GlassCard Grid.Row="0">
@@ -425,6 +425,28 @@
                 </StackPanel>
             </suki:GlassCard>
             
+            <!-- Sensor Readings DataGrid -->
+            <suki:GlassCard Grid.Row="5">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="Sensor Readings"
+                               FontSize="16"
+                               FontWeight="SemiBold" />
+
+                    <DataGrid ItemsSource="{Binding SensorReadings}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              Classes="custom-datagrid">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Timestamp"
+                                               Binding="{Binding Timestamp, StringFormat='{}{0:MMM dd, HH:mm:ss}'}"
+                                               Width="*" />
+                            <DataGridTextColumn Header="Value"
+                                               Binding="{Binding Value, StringFormat='{}{0:F2}'}"
+                                               Width="150" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </suki:GlassCard>
         </Grid>
     </ScrollViewer>
     
