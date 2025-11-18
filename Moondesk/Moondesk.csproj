@@ -1,0 +1,117 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.3.8" />
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.8" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.8" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.8" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.8" />
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.3.8">
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+        <PackageReference Include="CsvHelper" Version="33.1.0" />
+        <PackageReference Include="Google.Protobuf" Version="3.33.1" />
+        <PackageReference Include="LiteDB" Version="5.0.21" />
+        <PackageReference Include="LoadingIndicators.Avalonia" Version="11.0.11.1" />
+        <PackageReference Include="Material.Icons.Avalonia" Version="2.4.1" />
+        <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.11">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.11" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+        <PackageReference Include="Microsoft.SemanticKernel" Version="1.67.1" />
+        <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.67.1" />
+        <PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.67.1" />
+        <PackageReference Include="Prism.Avalonia" Version="9.0.537.11130" />
+        <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="9.6.2" />
+        <PackageReference Include="Serilog" Version="4.3.0" />
+        <PackageReference Include="Serilog.Enrichers.CallerInfo" Version="1.0.6" />
+        <PackageReference Include="Serilog.Enrichers.CallStack" Version="1.0.37" />
+        <PackageReference Include="Serilog.Enrichers.WithCaller" Version="1.3.0" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+        <PackageReference Include="SkiaSharp" Version="3.119.1" />
+        <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.119.1" />
+        <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.119.1" />
+        <PackageReference Include="Splat" Version="15.4.1" />
+        <PackageReference Include="SukiUI" Version="6.0.3" />
+        <PackageReference Include="SukiUI.Dock" Version="6.0.3" />
+        <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.6.2" />
+        <PackageReference Include="System.Reactive" Version="6.1.0" />
+        <PackageReference Include="UnitsNet" Version="5.75.0" />
+        <PackageReference Include="Xaml.Behaviors.Avalonia" Version="11.3.8.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="App.axaml.cs">
+        <DependentUpon>App.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="Views\MainWindowView.axaml.cs">
+        <DependentUpon>MainWindow.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="Views\Pages\SettingsView.axaml.cs">
+        <DependentUpon>SettingsView.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="Views\Pages\SimpleAppView.axaml.cs">
+        <DependentUpon>SimpleAppView.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="Views\Pages\ChatView.axaml.cs">
+        <DependentUpon>ChatView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\ChatUI.axaml.cs">
+        <DependentUpon>ChatUI.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\DataEntry\NewEntryWindowViewModel.axaml.cs">
+        <DependentUpon>NewEntryWindowViewModel.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\DialogView.axaml.cs">
+        <DependentUpon>DialogView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Pages\AssetDirectoryView.axaml.cs">
+        <DependentUpon>AssetDirectoryView.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="Views\Pages\AlertManagementView.axaml.cs">
+        <DependentUpon>AlertManagementView.axaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="app.manifest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AquaPP.Contracts\AquaPP.Contracts.csproj" />
+    </ItemGroup>
+        
+    <ItemGroup>
+        <ProjectReference Include="..\AquaPP.Core\AquaPP.Core.csproj" />
+    </ItemGroup>
+</Project>
