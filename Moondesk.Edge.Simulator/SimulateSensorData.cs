@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Moondesk.Core.Models.IoT;
+using Moondesk.Domain.Models.IoT;
 using MQTTnet;
 using MQTTnet.Protocol;
 
@@ -79,6 +79,8 @@ public abstract class SensorReadingSimulator
                 await Task.Delay(TimeSpan.FromSeconds(delay));
             }
         }
+        // ReSharper disable once FunctionNeverReturns
+        // This is a feature and not a bug
     }
 
     private static ReadingQuality GetReadingQuality()
