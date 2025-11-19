@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Moondesk.Domain.Models;
 using Moondesk.Domain.Models.IoT;
 using Moondesk.Domain.Models.Network;
-using Moondesk.DataAccess.Models;
 
 namespace Moondesk.DataAccess.Data;
 
@@ -17,11 +16,11 @@ public class MoondeskDbContext : DbContext
     public DbSet<ConnectionCredential> ConnectionCredentials { get; set; }
 
     // IoT entities with organization extensions
-    public DbSet<AssetExtended> Assets { get; set; }
-    public DbSet<SensorExtended> Sensors { get; set; }
-    public DbSet<ReadingExtended> Readings { get; set; }
-    public DbSet<AlertExtended> Alerts { get; set; }
-    public DbSet<CommandExtended> Commands { get; set; }
+    public DbSet<Asset> Assets { get; set; }
+    public DbSet<Sensor> Sensors { get; set; }
+    public DbSet<Reading> Readings { get; set; }
+    public DbSet<Alert> Alerts { get; set; }
+    public DbSet<Command> Commands { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -67,11 +66,11 @@ public class MoondeskDbContext : DbContext
         modelBuilder.Ignore<Command>();
 
         // Configure table names for extended entities
-        modelBuilder.Entity<AssetExtended>().ToTable("assets");
-        modelBuilder.Entity<SensorExtended>().ToTable("sensors");
-        modelBuilder.Entity<ReadingExtended>().ToTable("readings");
-        modelBuilder.Entity<AlertExtended>().ToTable("alerts");
-        modelBuilder.Entity<CommandExtended>().ToTable("commands");
+        modelBuilder.Entity<Asset>().ToTable("assets");
+        modelBuilder.Entity<Sensor>().ToTable("sensors");
+        modelBuilder.Entity<Reading>().ToTable("readings");
+        modelBuilder.Entity<Alert>().ToTable("alerts");
+        modelBuilder.Entity<Command>().ToTable("commands");
     }
 
     private void ConfigureIndexes(ModelBuilder modelBuilder)
@@ -87,38 +86,38 @@ public class MoondeskDbContext : DbContext
             .HasIndex(o => o.OwnerId);
 
         // IoT performance indexes
-        modelBuilder.Entity<AssetExtended>()
+        modelBuilder.Entity<Asset>()
             .HasIndex(a => a.OrganizationId);
 
-        modelBuilder.Entity<SensorExtended>()
+        modelBuilder.Entity<Sensor>()
             .HasIndex(s => new { s.OrganizationId, s.AssetId });
-        modelBuilder.Entity<SensorExtended>()
+        modelBuilder.Entity<Sensor>()
             .HasIndex(s => new { s.OrganizationId, s.IsActive });
 
         // Critical reading indexes for TimescaleDB
-        modelBuilder.Entity<ReadingExtended>()
+        modelBuilder.Entity<Reading>()
             .HasIndex(r => new { r.OrganizationId, r.SensorId, r.Timestamp })
             .HasDatabaseName("IX_Readings_OrgId_SensorId_Timestamp");
 
-        modelBuilder.Entity<ReadingExtended>()
+        modelBuilder.Entity<Reading>()
             .HasIndex(r => new { r.OrganizationId, r.Timestamp })
             .HasDatabaseName("IX_Readings_OrgId_Timestamp");
 
         // Alert indexes
-        modelBuilder.Entity<AlertExtended>()
+        modelBuilder.Entity<Alert>()
             .HasIndex(a => new { a.OrganizationId, a.Acknowledged, a.Timestamp });
 
         // Command indexes
-        modelBuilder.Entity<CommandExtended>()
+        modelBuilder.Entity<Command>()
             .HasIndex(c => new { c.OrganizationId, c.Status, c.CreatedAt });
-        modelBuilder.Entity<CommandExtended>()
+        modelBuilder.Entity<Command>()
             .HasIndex(c => new { c.OrganizationId, c.UserId });
     }
 
     private void ConfigureTimescaleDb(ModelBuilder modelBuilder)
     {
         // Configure readings table for TimescaleDB hypertable
-        modelBuilder.Entity<ReadingExtended>(entity =>
+        modelBuilder.Entity<Reading>(entity =>
         {
             // Remove default primary key and create composite key with timestamp
             entity.HasKey(e => new { e.Id, e.Timestamp });
@@ -139,11 +138,11 @@ public class MoondeskDbContext : DbContext
         });
 
         // Configure other timestamp columns
-        modelBuilder.Entity<AlertExtended>()
+        modelBuilder.Entity<Alert>()
             .Property(e => e.Timestamp)
             .HasColumnType("timestamptz");
 
-        modelBuilder.Entity<AlertExtended>()
+        modelBuilder.Entity<Alert>()
             .Property(e => e.AcknowledgedAt)
             .HasColumnType("timestamptz");
     }

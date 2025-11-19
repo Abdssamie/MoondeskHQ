@@ -11,6 +11,8 @@ public class Command
     
     public long SensorId { get; set; }
     
+    public required string OrganizationId { get; set; }
+    
     [MaxLength(100)]
     public required string CommandType { get; set; }
     

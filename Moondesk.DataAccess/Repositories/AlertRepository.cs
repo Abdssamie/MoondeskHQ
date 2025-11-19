@@ -52,6 +52,30 @@ public class AlertRepository : IAlertRepository
         }
     }
 
+    public async Task<Alert> CreateAlertAsync(Alert alert)
+    {
+        try
+        {
+            // check if id already exists
+            var existing = await _context.Alerts.FindAsync(alert.Id);
+            if (existing != null)
+            {
+                throw new ArgumentException($"Alert with id {alert.Id} already exists in the database");
+            }
+
+            await _context.Alerts.AddAsync(alert);
+
+            await _context.SaveChangesAsync();
+
+            return alert;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Error creating alert: {AlertId}", alert.Id);
+            throw;
+        }
+    }
+
     public async Task<IEnumerable<Alert>> GetAlertsByAlertSeverityAsync(AlertSeverity severity)
     {
         try

@@ -26,6 +26,7 @@ public static class RepositoryServiceCollectionExtensions
         
         // IoT data repositories
         services.AddScoped<IReadingRepository, ReadingRepository>();
+        services.AddScoped<ICommandRepository, CommandRepository>();
 
         return services;
     }

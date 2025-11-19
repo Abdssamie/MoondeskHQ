@@ -11,6 +11,8 @@ public class Reading
     
     public long SensorId { get; set; }
     
+    public required string OrganizationId { get; set; }
+    
     public DateTimeOffset Timestamp { get; set; }
     
     public double Value { get; set; }

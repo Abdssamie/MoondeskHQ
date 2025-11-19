@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moondesk.DataAccess.Data;
-using Moondesk.DataAccess.Models;
 using Moondesk.Domain.Enums;
 using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Models.IoT;
@@ -93,7 +92,7 @@ public class SensorRepository : ISensorRepository
             _logger.LogInformation("Creating sensor: {SensorName} for asset {AssetId}", sensor.Name, sensor.AssetId);
 
             // Convert to extended model for database storage
-            var sensorExtended = new SensorExtended
+            var sensorExtended = new Sensor
             {
                 AssetId = sensor.AssetId,
                 Name = sensor.Name,

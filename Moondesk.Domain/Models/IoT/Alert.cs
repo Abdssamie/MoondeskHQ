@@ -12,6 +12,8 @@ public class Alert
     
     public long SensorId { get; set; }
     
+    public required string OrganizationId { get; set; }
+    
     public DateTimeOffset Timestamp { get; set; }
     
     public AlertSeverity Severity { get; set; }

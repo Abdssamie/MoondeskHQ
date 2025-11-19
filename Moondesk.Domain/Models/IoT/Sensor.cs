@@ -12,6 +12,8 @@ public class Sensor
     
     public long AssetId { get; set; }
     
+    public required string OrganizationId { get; set; }
+    
     public string Name { get; set; } = string.Empty;
     
     public SensorType Type { get; set; }

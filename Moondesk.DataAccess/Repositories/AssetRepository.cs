@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moondesk.DataAccess.Data;
-using Moondesk.DataAccess.Models;
 using Moondesk.Domain.Enums;
 using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Models.IoT;
@@ -75,7 +74,7 @@ public class AssetRepository : IAssetRepository
             _logger.LogInformation("Creating asset: {AssetName}", asset.Name);
 
             // Convert to extended model for database storage
-            var assetExtended = new AssetExtended
+            var assetExtended = new Asset
             {
                 Name = asset.Name,
                 Type = asset.Type,

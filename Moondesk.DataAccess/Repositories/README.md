@@ -92,7 +92,7 @@ public class UserService
 ### **Time-Series Data Operations**
 ```csharp
 // High-performance reading insertion
-var readings = sensors.Select(s => new ReadingExtended
+var readings = sensors.Select(s => new Reading
 {
     OrganizationId = organizationId,
     SensorId = s.Id,

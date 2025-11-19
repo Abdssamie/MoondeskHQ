@@ -11,6 +11,8 @@ public interface IAlertRepository
 
     Task<IEnumerable<Alert>> GetAlertsByAlertSeverityAsync(AlertSeverity severity);
 
+    Task<Alert> CreateAlertAsync(Alert alert);
+
     Task<Alert> UpdateAlertAsync(long id, Alert reading);
 
     Task DeleteAlertAsync(long id);

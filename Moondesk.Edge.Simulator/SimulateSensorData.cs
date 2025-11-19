@@ -8,7 +8,7 @@ namespace Moondesk.Edge.Simulator;
 
 public abstract class SensorReadingSimulator
 {
-    private static Sensor _sensor = new Sensor { Asset = new Asset { Location = "Home" } };
+    private static Sensor _sensor = new Sensor {OrganizationId = "78976" ,Asset = new Asset { Location = "Home" , OrganizationId = "78976"} };
 
     public static async Task PublishAsync(IMqttClient client)
     {
@@ -18,6 +18,7 @@ public abstract class SensorReadingSimulator
         {
             var reading = new Reading
             {
+                OrganizationId = "78976",
                 Id = random.NextInt64(minValue: 1000000000000000, maxValue: 9999999999999999),
                 Quality = GetReadingQuality(),
                 Sensor = _sensor,
@@ -56,6 +57,7 @@ public abstract class SensorReadingSimulator
         {
             var alert = new Alert
             {
+                OrganizationId = "78976",
                 Acknowledged = false,
                 Sensor = _sensor,
                 SensorId = _sensor.Id,

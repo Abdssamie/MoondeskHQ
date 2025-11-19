@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moondesk.DataAccess.Data;
-using Moondesk.DataAccess.Models;
 using Moondesk.Domain.Enums;
 using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Models.IoT;
@@ -153,7 +152,7 @@ public class ReadingRepository : IReadingRepository
     /// Retrieves recent readings for a sensor with organization scoping.
     /// Optimized for real-time dashboards and monitoring.
     /// </summary>
-    public async Task<IEnumerable<ReadingExtended>> GetRecentReadingsAsync(
+    public async Task<IEnumerable<Reading>> GetRecentReadingsAsync(
         string organizationId, long sensorId, int limit = 100)
     {
         if (string.IsNullOrWhiteSpace(organizationId))
@@ -184,7 +183,7 @@ public class ReadingRepository : IReadingRepository
     /// Performs high-performance bulk insert of readings using EF Core batch operations.
     /// Optimized for IoT data ingestion with minimal overhead.
     /// </summary>
-    public async Task BulkInsertReadingsAsync(IEnumerable<ReadingExtended> readings)
+    public async Task BulkInsertReadingsAsync(IEnumerable<Reading> readings)
     {
         if (readings == null)
             throw new ArgumentNullException(nameof(readings));

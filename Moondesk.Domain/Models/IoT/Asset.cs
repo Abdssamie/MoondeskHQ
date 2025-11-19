@@ -10,6 +10,8 @@ public class Asset
 {
     public long Id { get; set; }
     
+    public required string OrganizationId { get; set; }
+    
     public string Name { get; set; } = string.Empty;
     
     public string Type { get; set; } = string.Empty; // e.g., "Pump", "Tank", "Valve", "Compressor"
