@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Moondesk.API.Extensions;
 using Moondesk.DataAccess.Configuration;
 using Moondesk.DataAccess.Repositories;
 using Serilog;
@@ -32,9 +33,46 @@ try
     builder.Services.AddRepositories();
 
     // Add API services
-    builder.Services.AddControllers();
+    builder.Services.AddControllers()
+        .AddApplicationPart(typeof(Moondesk.API.Controllers.BaseApiController).Assembly)
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.SnakeCaseLower;
+        });
+    
+    builder.Services.AddRouting(options => options.LowercaseUrls = true);
+    
+    builder.Services.AddApiVersioning(options =>
+    {
+        options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.ReportApiVersions = true;
+    }).AddMvc().AddApiExplorer(options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
+    
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.EnableAnnotations();
+    });
+    
+    // Add health checks
+    builder.Services.AddHealthChecks()
+        .AddNpgSql(connectionString, name: "database");
+    
+    // Add CORS
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+    });
 
     var app = builder.Build();
 
@@ -61,12 +99,14 @@ try
     }
 
     app.UseHttpsRedirection();
+    app.UseCors();
+    app.UseClerkAuthentication(app.Configuration);
     app.UseRouting();
     app.UseAuthorization();
     
     // Map controllers and health endpoint
     app.MapControllers();
-    app.MapGet("/health", () => new { Status = "Healthy", Timestamp = DateTime.UtcNow });
+    app.MapHealthChecks("/health");
 
     Log.Information("Moondesk Host application starting on {Environment}...", app.Environment.EnvironmentName);
     await app.RunAsync();

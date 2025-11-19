@@ -81,7 +81,7 @@ public class CommandRepositoryIntegrationTests : IClassFixture<TimescaleDbTestCo
         var result = await repository.GetByIdAsync(command.Id);
 
         result.Should().NotBeNull();
-        result!.Id.Should().Be(command.Id);
+        result.Id.Should().Be(command.Id);
     }
 
     [Fact]
@@ -94,8 +94,9 @@ public class CommandRepositoryIntegrationTests : IClassFixture<TimescaleDbTestCo
 
         var results = await repository.GetBySensorIdAsync(_sensor.Id);
 
-        results.Should().HaveCountGreaterThan(1);
-        results.Should().AllSatisfy(c => c.SensorId.Should().Be(_sensor.Id));
+        var enumerable = results.ToList();
+        enumerable.Should().HaveCountGreaterThan(1);
+        enumerable.Should().AllSatisfy(c => c.SensorId.Should().Be(_sensor.Id));
     }
 
     [Fact]
@@ -121,8 +122,9 @@ public class CommandRepositoryIntegrationTests : IClassFixture<TimescaleDbTestCo
 
         var results = await repository.GetPendingCommandsAsync(_orgId);
 
-        results.Should().HaveCountGreaterThan(0);
-        results.Should().AllSatisfy(c => 
+        var enumerable = results.ToList();
+        enumerable.Should().HaveCountGreaterThan(0);
+        enumerable.Should().AllSatisfy(c => 
         {
             c.OrganizationId.Should().Be(_orgId);
             c.Status.Should().Be(CommandStatus.Pending);

@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moondesk.Host", "Moondesk.H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moondesk.DataAccess.Tests", "Moondesk.DataAccess.Tests\Moondesk.DataAccess.Tests.csproj", "{D19D4B34-FD16-4ADF-AB95-5187CF4C6089}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moondesk.API.Tests", "Moondesk.API.Tests\Moondesk.API.Tests.csproj", "{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moondesk.BackgroundServices", "Moondesk.BackgroundServices\Moondesk.BackgroundServices.csproj", "{136BDE41-6514-41F5-9FFD-7AEE112A8D53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +98,30 @@ Global
 		{D19D4B34-FD16-4ADF-AB95-5187CF4C6089}.Release|x64.Build.0 = Release|Any CPU
 		{D19D4B34-FD16-4ADF-AB95-5187CF4C6089}.Release|x86.ActiveCfg = Release|Any CPU
 		{D19D4B34-FD16-4ADF-AB95-5187CF4C6089}.Release|x86.Build.0 = Release|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Debug|x64.Build.0 = Debug|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Debug|x86.Build.0 = Debug|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Release|x64.ActiveCfg = Release|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Release|x64.Build.0 = Release|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Release|x86.ActiveCfg = Release|Any CPU
+		{51A20B4A-EDD7-4622-B7D5-CFFB25E53145}.Release|x86.Build.0 = Release|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Debug|x64.Build.0 = Debug|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Debug|x86.Build.0 = Debug|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Release|x64.ActiveCfg = Release|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Release|x64.Build.0 = Release|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Release|x86.ActiveCfg = Release|Any CPU
+		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

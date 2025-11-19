@@ -20,12 +20,16 @@ public static class RepositoryServiceCollectionExtensions
         // Core entity repositories
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<IOrganizationMembershipRepository, OrganizationMembershipRepository>();
         
         // Network and security repositories
         services.AddScoped<IConnectionCredentialRepository, ConnectionCredentialRepository>();
         
         // IoT data repositories
+        services.AddScoped<IAssetRepository, AssetRepository>();
+        services.AddScoped<ISensorRepository, SensorRepository>();
         services.AddScoped<IReadingRepository, ReadingRepository>();
+        services.AddScoped<IAlertRepository, AlertRepository>();
         services.AddScoped<ICommandRepository, CommandRepository>();
 
         return services;
