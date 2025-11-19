@@ -22,19 +22,19 @@ public class ReadingRepository : IReadingRepository
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async Task<Reading> GetReadingAsync(long id)
+    public async Task<Reading> GetReadingAsync(long sensorId, DateTimeOffset timestamp)
     {
         try
         {
             var reading = await _context.Readings
                 .AsNoTracking()
-                .FirstOrDefaultAsync(r => r.Id == id);
+                .FirstOrDefaultAsync(r => r.SensorId == sensorId && r.Timestamp == timestamp);
             
-            return reading ?? throw new ArgumentException($"Reading with ID {id} not found");
+            return reading ?? throw new ArgumentException($"Reading for sensor {sensorId} at {timestamp} not found");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving reading with ID: {ReadingId}", id);
+            _logger.LogError(ex, "Error retrieving reading for sensor: {SensorId} at {Timestamp}", sensorId, timestamp);
             throw;
         }
     }
@@ -74,13 +74,14 @@ public class ReadingRepository : IReadingRepository
         }
     }
 
-    public async Task<Reading> UpdateReadingAsync(long id, Reading reading)
+    public async Task<Reading> UpdateReadingAsync(long sensorId, DateTimeOffset timestamp, Reading reading)
     {
         try
         {
-            var existing = await _context.Readings.FindAsync(id);
+            var existing = await _context.Readings
+                .FirstOrDefaultAsync(r => r.SensorId == sensorId && r.Timestamp == timestamp);
             if (existing == null)
-                throw new ArgumentException($"Reading with ID {id} not found");
+                throw new ArgumentException($"Reading for sensor {sensorId} at {timestamp} not found");
 
             _context.Entry(existing).CurrentValues.SetValues(reading);
             await _context.SaveChangesAsync();
@@ -89,25 +90,26 @@ public class ReadingRepository : IReadingRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error updating reading: {ReadingId}", id);
+            _logger.LogError(ex, "Error updating reading for sensor: {SensorId}", sensorId);
             throw;
         }
     }
 
-    public async Task DeleteReadingAsync(long id)
+    public async Task DeleteReadingAsync(long sensorId, DateTimeOffset timestamp)
     {
         try
         {
-            var reading = await _context.Readings.FindAsync(id);
+            var reading = await _context.Readings
+                .FirstOrDefaultAsync(r => r.SensorId == sensorId && r.Timestamp == timestamp);
             if (reading == null)
-                throw new ArgumentException($"Reading with ID {id} not found");
+                throw new ArgumentException($"Reading for sensor {sensorId} at {timestamp} not found");
 
             _context.Readings.Remove(reading);
             await _context.SaveChangesAsync();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error deleting reading: {ReadingId}", id);
+            _logger.LogError(ex, "Error deleting reading for sensor: {SensorId}", sensorId);
             throw;
         }
     }

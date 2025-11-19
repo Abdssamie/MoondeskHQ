@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moondesk.DataAccess.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Moondesk.DataAccess.Migrations
 {
     [DbContext(typeof(MoondeskDbContext))]
-    partial class MoondeskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251119173137_FixOldExtensionIssues")]
+    partial class FixOldExtensionIssues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,9 +260,9 @@ namespace Moondesk.DataAccess.Migrations
 
             modelBuilder.Entity("Moondesk.Domain.Models.IoT.Reading", b =>
                 {
-                    b.Property<long>("SensorId")
+                    b.Property<long>("Id")
                         .HasColumnType("bigint")
-                        .HasColumnName("sensor_id");
+                        .HasColumnName("id");
 
                     b.Property<DateTimeOffset>("Timestamp")
                         .ValueGeneratedOnAdd()
@@ -289,12 +292,19 @@ namespace Moondesk.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("quality");
 
+                    b.Property<long>("SensorId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("sensor_id");
+
                     b.Property<double>("Value")
                         .HasColumnType("double precision")
                         .HasColumnName("value");
 
-                    b.HasKey("SensorId", "Timestamp")
+                    b.HasKey("Id", "Timestamp")
                         .HasName("pk_readings");
+
+                    b.HasIndex("SensorId")
+                        .HasDatabaseName("ix_readings_sensor_id");
 
                     b.HasIndex("OrganizationId", "Timestamp")
                         .HasDatabaseName("IX_Readings_OrgId_Timestamp");

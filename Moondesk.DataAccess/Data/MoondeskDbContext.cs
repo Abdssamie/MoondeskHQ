@@ -58,14 +58,7 @@ public class MoondeskDbContext : DbContext
 
     private void ConfigureIoTEntities(ModelBuilder modelBuilder)
     {
-        // Only map extended entities, ignore base types
-        modelBuilder.Ignore<Asset>();
-        modelBuilder.Ignore<Sensor>();
-        modelBuilder.Ignore<Reading>();
-        modelBuilder.Ignore<Alert>();
-        modelBuilder.Ignore<Command>();
-
-        // Configure table names for extended entities
+        // Configure table names
         modelBuilder.Entity<Asset>().ToTable("assets");
         modelBuilder.Entity<Sensor>().ToTable("sensors");
         modelBuilder.Entity<Reading>().ToTable("readings");
@@ -119,8 +112,8 @@ public class MoondeskDbContext : DbContext
         // Configure readings table for TimescaleDB hypertable
         modelBuilder.Entity<Reading>(entity =>
         {
-            // Remove default primary key and create composite key with timestamp
-            entity.HasKey(e => new { e.Id, e.Timestamp });
+            // Composite key with SensorId and Timestamp for TimescaleDB
+            entity.HasKey(e => new { e.SensorId, e.Timestamp });
             
             // Fix timestamp column type to timestamptz
             entity.Property(e => e.Timestamp)

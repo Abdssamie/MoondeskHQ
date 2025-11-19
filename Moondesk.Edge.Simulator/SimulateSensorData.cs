@@ -19,7 +19,6 @@ public abstract class SensorReadingSimulator
             var reading = new Reading
             {
                 OrganizationId = "78976",
-                Id = random.NextInt64(minValue: 1000000000000000, maxValue: 9999999999999999),
                 Quality = GetReadingQuality(),
                 Sensor = _sensor,
                 SensorId = _sensor.Id,

@@ -5,17 +5,21 @@ namespace Moondesk.Domain.Interfaces.Repositories;
 
 public interface IReadingRepository
 {
-    Task<Reading> GetReadingAsync(long id);
+    Task<Reading> GetReadingAsync(long sensorId, DateTimeOffset timestamp);
     
     Task<IEnumerable<Reading>> GetReadingsAsync();
     
     Task<IEnumerable<Reading>> GetReadingsByQualityAsync(ReadingQuality quality);
     
-    Task<Reading> UpdateReadingAsync(long id, Reading reading);
+    Task<Reading> UpdateReadingAsync(long sensorId, DateTimeOffset timestamp, Reading reading);
 
-    Task DeleteReadingAsync(long id);
+    Task DeleteReadingAsync(long sensorId, DateTimeOffset timestamp);
     
     Task<IEnumerable<Reading>> GetReadingsBySensorAsync(long sensorId);
     
-    Task<IEnumerable<Reading>> GetReadingsByProtocolAsync(Protocol protocol); 
+    Task<IEnumerable<Reading>> GetReadingsByProtocolAsync(Protocol protocol);
+    
+    Task<IEnumerable<Reading>> GetRecentReadingsAsync(string organizationId, long sensorId, int limit = 100);
+    
+    Task BulkInsertReadingsAsync(IEnumerable<Reading> readings);
 }

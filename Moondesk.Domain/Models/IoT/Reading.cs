@@ -7,8 +7,6 @@ namespace Moondesk.Domain.Models.IoT;
 /// </summary>
 public class Reading
 {
-    public long Id { get; set; }
-    
     public long SensorId { get; set; }
     
     public required string OrganizationId { get; set; }

@@ -68,7 +68,6 @@ public static class MockData
     {
         SensorId = sensorId,
         OrganizationId = organizationId ?? Guid.NewGuid().ToString(),
-        Timestamp = DateTimeOffset.UtcNow,
         Value = value,
         Protocol = Protocol.Mqtt,
         Quality = ReadingQuality.Good
@@ -84,7 +83,7 @@ public static class MockData
         TriggerValue = 105,
         ThresholdValue = 100,
         Acknowledged = false,
-        Protocol = Protocol.OpcUa
+        Protocol = Protocol.Mqtt
     };
 
     public static Command CreateCommand(long sensorId, string userId, string? organizationId = null) => new()
