@@ -63,8 +63,9 @@ public class ReadingRepositoryIntegrationTests : IClassFixture<TimescaleDbTestCo
 
             var results = await repository.GetReadingsBySensorAsync(sensor.Id);
 
-            results.Should().HaveCountGreaterThan(1);
-            results.Should().AllSatisfy(r => r.SensorId.Should().Be(sensor.Id));
+            var enumerable = results.ToList();
+            enumerable.Should().HaveCountGreaterThan(1);
+            enumerable.Should().AllSatisfy(r => r.SensorId.Should().Be(sensor.Id));
         }
     }
 

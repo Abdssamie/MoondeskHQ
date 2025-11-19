@@ -9,8 +9,8 @@ public static class MockData
     public static User CreateUser(string? id = null) => new()
     {
         Id = id ?? Guid.NewGuid().ToString(),
-        Username = "testuser",
-        Email = "test@example.com",
+        Username = $"testuser_{Guid.NewGuid().ToString()[..8]}",
+        Email = $"test_{Guid.NewGuid().ToString()[..8]}@example.com",
         FirstName = "Test",
         LastName = "User",
         IsOnboarded = true,
@@ -20,7 +20,7 @@ public static class MockData
     public static Organization CreateOrganization(string? id = null, string? ownerId = null) => new()
     {
         Id = id ?? Guid.NewGuid().ToString(),
-        Name = "Test Org",
+        Name = $"Test Org {Guid.NewGuid().ToString()[..8]}",
         OwnerId = ownerId ?? Guid.NewGuid().ToString(),
         SubscriptionPlan = SubscriptionPlan.Free,
         StorageLimitGB = 5,

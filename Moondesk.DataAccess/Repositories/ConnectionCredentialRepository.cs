@@ -103,7 +103,7 @@ public class ConnectionCredentialRepository : IConnectionCredentialRepository
         }
     }
 
-    public async Task<IEnumerable<ConnectionCredential>> GetActiveAsync(string organizationId)
+    public async Task<IEnumerable<ConnectionCredential>> GetActiveAsyncByOrganizationIdAsync(string organizationId)
     {
         if (string.IsNullOrWhiteSpace(organizationId))
             throw new ArgumentException("Organization ID cannot be null or empty", nameof(organizationId));

@@ -9,7 +9,7 @@ public interface IConnectionCredentialRepository
     Task<ConnectionCredential?> GetByNameAsync(string name, string organizationId);
     Task<IEnumerable<ConnectionCredential>> GetByOrganizationIdAsync(string organizationId);
     Task<IEnumerable<ConnectionCredential>> GetByProtocolAsync(Protocol protocol, string organizationId);
-    Task<IEnumerable<ConnectionCredential>> GetActiveAsync(string organizationId);
+    Task<IEnumerable<ConnectionCredential>> GetActiveAsyncByOrganizationIdAsync(string organizationId);
     Task<ConnectionCredential> CreateAsync(ConnectionCredential credential);
     Task<ConnectionCredential> UpdateAsync(ConnectionCredential credential);
     Task DeleteAsync(long id);
