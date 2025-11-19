@@ -8,6 +8,11 @@ using Moondesk.Domain.Models.Network;
 
 namespace Moondesk.DataAccess.Repositories;
 
+// TODO: CRITICAL SECURITY - Implement IEncryptionService to encrypt/decrypt EncryptedPassword
+// Currently storing credentials in plain text. Need to:
+// 1. Inject IEncryptionService in constructor
+// 2. Encrypt password in CreateAsync/UpdateAsync before saving
+// 3. Decrypt password in GetByIdAsync/GetAllAsync after retrieving
 /// <summary>
 /// Repository for managing ConnectionCredential entities with encryption and multi-tenant security.
 /// </summary>
