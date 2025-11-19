@@ -1,6 +1,7 @@
+using Moondesk.Domain.Enums;
 using Moondesk.Domain.Models.IoT;
 
-namespace Moondesk.Domain.Interfaces;
+namespace Moondesk.Domain.Interfaces.Repositories;
 
 /// <summary>
 /// Repository for managing sensors
@@ -11,15 +12,15 @@ public interface ISensorRepository
     
     Task<IEnumerable<Sensor>> GetAllWithAssetsAsync();
     
-    Task<Sensor?> GetByIdAsync(int id);
+    Task<Sensor?> GetByIdAsync(long id);
     
-    Task<IEnumerable<Sensor>> GetByAssetIdAsync(int assetId);
+    Task<IEnumerable<Sensor>> GetByAssetIdAsync(long assetId);
     
     Task<Sensor> AddAsync(Sensor sensor);
     
     Task UpdateAsync(Sensor sensor);
     
-    Task DeleteAsync(int id);
+    Task DeleteAsync(long id);
     
     Task<IEnumerable<Sensor>> GetActiveSensorsAsync();
     

@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Moondesk.Domain.Enums;
 
 namespace Moondesk.Domain.Models.IoT;
 
@@ -9,9 +8,9 @@ namespace Moondesk.Domain.Models.IoT;
 /// </summary>
 public class Sensor
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     
-    public int AssetId { get; set; }
+    public long AssetId { get; set; }
     
     public string Name { get; set; } = string.Empty;
     
@@ -31,26 +30,16 @@ public class Sensor
     
     public bool IsActive { get; set; } = true;
     
+    public Protocol Protocol { get; set; }
+    
     [MaxLength(100)]
     public string? Description { get; set; }
+    
+    public Dictionary<string, string>? Metadata { get; set; } = new();
     
     // Navigation properties
     public Asset Asset { get; set; } = null!;
     public ICollection<Reading> Readings { get; set; } = new List<Reading>();
     public ICollection<Alert> Alerts { get; set; } = new List<Alert>();
-}
-
-public enum SensorType
-{
-    Temperature = 1,
-    Pressure = 2,
-    Vibration = 3,
-    FlowRate = 4,
-    Level = 5,
-    Humidity = 6,
-    Power = 7,
-    Speed = 8,
-    pH = 9,
-    Conductivity = 10,
-    Custom = 99
+    public ICollection<Command> Commands { get; set; } = new List<Command>();
 }

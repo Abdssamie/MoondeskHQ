@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="Units\Units.fr-FR.resx"/>
-        <AdditionalFiles Include="Units\Units.resx"/>
+        <AdditionalFiles Include="Units\Units.fr-FR.resx" />
+        <AdditionalFiles Include="Units\Units.resx" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="UnitsNet" Version="5.75.0"/>
+        <PackageReference Include="UnitsNet" Version="5.75.0" />
     </ItemGroup>
+
 </Project>

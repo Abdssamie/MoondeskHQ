@@ -1,6 +1,6 @@
 using Moondesk.Domain.Models.IoT;
 
-namespace Moondesk.Domain.Interfaces;
+namespace Moondesk.Domain.Interfaces.Repositories;
 
 /// <summary>
 /// Service for streaming real-time sensor data
@@ -10,18 +10,18 @@ public interface IDataStreamService
     /// <summary>
     /// Stream real-time readings from a specific sensor
     /// </summary>
-    IObservable<Reading> StreamReadings(int sensorId);
+    IObservable<Reading> StreamReadings(long sensorId);
     
     /// <summary>
     /// Stream readings from all sensors of a specific asset
     /// </summary>
-    IObservable<Reading> StreamAssetReadings(int assetId);
+    IObservable<Reading> StreamAssetReadings(long assetId);
     
     /// <summary>
     /// Get historical readings for a sensor within a time range
     /// </summary>
     Task<IEnumerable<Reading>> GetHistoricalReadingsAsync(
-        int sensorId, 
+        long sensorId, 
         DateTimeOffset from, 
         DateTimeOffset to);
     

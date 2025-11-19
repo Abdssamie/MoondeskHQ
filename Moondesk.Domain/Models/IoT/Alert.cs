@@ -1,5 +1,5 @@
-using System;
 using System.ComponentModel.DataAnnotations;
+using Moondesk.Domain.Enums;
 
 namespace Moondesk.Domain.Models.IoT;
 
@@ -8,9 +8,9 @@ namespace Moondesk.Domain.Models.IoT;
 /// </summary>
 public class Alert
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     
-    public int SensorId { get; set; }
+    public long SensorId { get; set; }
     
     public DateTimeOffset Timestamp { get; set; }
     
@@ -32,14 +32,10 @@ public class Alert
     [MaxLength(100)]
     public string? Notes { get; set; }
     
+    public Protocol Protocol { get; set; }
+    
+    public Dictionary<string, string>? Metadata { get; set; } = new();
+    
     // Navigation property
     public Sensor Sensor { get; set; } = null!;
-}
-
-public enum AlertSeverity
-{
-    Info = 0,
-    Warning = 1,
-    Critical = 2,
-    Emergency = 3
 }

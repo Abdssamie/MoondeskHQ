@@ -1,6 +1,7 @@
+using Moondesk.Domain.Enums;
 using Moondesk.Domain.Models.IoT;
 
-namespace Moondesk.Domain.Interfaces;
+namespace Moondesk.Domain.Interfaces.Repositories;
 
 /// <summary>
 /// Repository for managing assets
@@ -9,15 +10,15 @@ public interface IAssetRepository
 {
     Task<IEnumerable<Asset>> GetAllAsync();
     
-    Task<Asset?> GetByIdAsync(int id);
+    Task<Asset?> GetByIdAsync(long id);
     
-    Task<Asset?> GetByIdWithSensorsAsync(int id);
+    Task<Asset?> GetByIdWithSensorsAsync(long id);
     
     Task<Asset> AddAsync(Asset asset);
     
     Task UpdateAsync(Asset asset);
     
-    Task DeleteAsync(int id);
+    Task DeleteAsync(long id);
     
     Task<IEnumerable<Asset>> GetAssetsByStatusAsync(AssetStatus status);
     

@@ -1,3 +1,5 @@
+using Moondesk.Domain.Enums;
+
 namespace Moondesk.Domain.Models.IoT;
 
 /// <summary>
@@ -7,24 +9,20 @@ public class Reading
 {
     public long Id { get; set; }
     
-    public int SensorId { get; set; }
+    public long SensorId { get; set; }
     
     public DateTimeOffset Timestamp { get; set; }
     
     public double Value { get; set; }
     
+    public Protocol Protocol { get; set; }
+    
     public ReadingQuality Quality { get; set; } = ReadingQuality.Good;
     
     public string? Notes { get; set; }
+
+    public Dictionary<string, string>? Metadata { get; set; } = new();
     
     // Navigation property
     public Sensor Sensor { get; set; } = null!;
-}
-
-public enum ReadingQuality
-{
-    Good = 0,
-    Uncertain = 1,
-    Bad = 2,
-    Simulated = 3
 }

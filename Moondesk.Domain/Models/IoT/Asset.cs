@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Moondesk.Domain.Enums;
 
 namespace Moondesk.Domain.Models.IoT;
 
@@ -9,7 +8,7 @@ namespace Moondesk.Domain.Models.IoT;
 /// </summary>
 public class Asset
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     
     public string Name { get; set; } = string.Empty;
     
@@ -32,16 +31,8 @@ public class Asset
     
     public DateTimeOffset? InstallationDate { get; set; }
     
+    public Dictionary<string, string>? Metadata { get; set; } = new();
+    
     // Navigation property
     public ICollection<Sensor> Sensors { get; set; } = new List<Sensor>();
-}
-
-public enum AssetStatus
-{
-    Unknown = 0,
-    Online = 1,
-    Offline = 2,
-    Warning = 3,
-    Critical = 4,
-    Maintenance = 5
 }

@@ -19,76 +19,293 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
 
-    <data name="Unit_Length_Meter" xml:space="preserve">
-    <value>mètre</value>
-  </data>
-    <data name="Unit_Length_Foot" xml:space="preserve">
-    <value>pied</value>
-  </data>
-    <data name="Unit_Mass_Kilogram" xml:space="preserve">
-    <value>kilogramme</value>
-  </data>
-    <data name="Unit_Mass_Pound" xml:space="preserve">
-    <value>livre</value>
-  </data>
-    <data name="Unit_Volume_CubicMeter" xml:space="preserve">
-    <value>mètre cube</value>
-  </data>
-    <data name="Unit_Volume_Gallon" xml:space="preserve">
-    <value>gallon</value>
-  </data>
-    <data name="Unit_Pressure_Pascal" xml:space="preserve">
-    <value>pascal</value>
-  </data>
-    <data name="Unit_Pressure_Psi" xml:space="preserve">
-    <value>psi</value>
-  </data>
+    <!-- Unités de température -->
     <data name="Unit_Temperature_Celsius" xml:space="preserve">
-    <value>Celsius</value>
-  </data>
+        <value>Celsius</value>
+    </data>
     <data name="Unit_Temperature_Fahrenheit" xml:space="preserve">
-    <value>Fahrenheit</value>
-  </data>
-    <data name="Unit_FlowRate_CubicMeterPerSecond" xml:space="preserve">
-    <value>mètre cube par seconde</value>
-  </data>
-    <data name="Unit_FlowRate_GallonPerMinute" xml:space="preserve">
-    <value>gallon par minute</value>
-  </data>
+        <value>Fahrenheit</value>
+    </data>
+    <data name="Unit_Temperature_Kelvin" xml:space="preserve">
+        <value>Kelvin</value>
+    </data>
 
-    <data name="Symbol_Length_Meter" xml:space="preserve">
-    <value>m</value>
-  </data>
-    <data name="Symbol_Length_Foot" xml:space="preserve">
-    <value>pi</value> </data>
-    <data name="Symbol_Mass_Kilogram" xml:space="preserve">
-    <value>kg</value>
-  </data>
-    <data name="Symbol_Mass_Pound" xml:space="preserve">
-    <value>lb</value>
-  </data>
-    <data name="Symbol_Volume_CubicMeter" xml:space="preserve">
-    <value>m³</value>
-  </data>
-    <data name="Symbol_Volume_Gallon" xml:space="preserve">
-    <value>gal</value>
-  </data>
-    <data name="Symbol_Pressure_Pascal" xml:space="preserve">
-    <value>Pa</value>
-  </data>
-    <data name="Symbol_Pressure_Psi" xml:space="preserve">
-    <value>psi</value>
-  </data>
+    <!-- Unités de pression -->
+    <data name="Unit_Pressure_Pascal" xml:space="preserve">
+        <value>pascal</value>
+    </data>
+    <data name="Unit_Pressure_Bar" xml:space="preserve">
+        <value>bar</value>
+    </data>
+    <data name="Unit_Pressure_Psi" xml:space="preserve">
+        <value>psi</value>
+    </data>
+    <data name="Unit_Pressure_Atm" xml:space="preserve">
+        <value>atmosphère</value>
+    </data>
+    <data name="Unit_Pressure_Torr" xml:space="preserve">
+        <value>torr</value>
+    </data>
+
+    <!-- Unités de débit -->
+    <data name="Unit_FlowRate_CubicMeterPerSecond" xml:space="preserve">
+        <value>mètre cube par seconde</value>
+    </data>
+    <data name="Unit_FlowRate_LiterPerSecond" xml:space="preserve">
+        <value>litre par seconde</value>
+    </data>
+    <data name="Unit_FlowRate_LiterPerMinute" xml:space="preserve">
+        <value>litre par minute</value>
+    </data>
+    <data name="Unit_FlowRate_GallonPerMinute" xml:space="preserve">
+        <value>gallon par minute</value>
+    </data>
+
+    <!-- Unités de volume -->
+    <data name="Unit_Volume_CubicMeter" xml:space="preserve">
+        <value>mètre cube</value>
+    </data>
+    <data name="Unit_Volume_Liter" xml:space="preserve">
+        <value>litre</value>
+    </data>
+    <data name="Unit_Volume_Gallon" xml:space="preserve">
+        <value>gallon</value>
+    </data>
+
+    <!-- Unités de longueur -->
+    <data name="Unit_Length_Meter" xml:space="preserve">
+        <value>mètre</value>
+    </data>
+    <data name="Unit_Length_Centimeter" xml:space="preserve">
+        <value>centimètre</value>
+    </data>
+    <data name="Unit_Length_Millimeter" xml:space="preserve">
+        <value>millimètre</value>
+    </data>
+    <data name="Unit_Length_Foot" xml:space="preserve">
+        <value>pied</value>
+    </data>
+    <data name="Unit_Length_Inch" xml:space="preserve">
+        <value>pouce</value>
+    </data>
+
+    <!-- Unités de masse -->
+    <data name="Unit_Mass_Kilogram" xml:space="preserve">
+        <value>kilogramme</value>
+    </data>
+    <data name="Unit_Mass_Gram" xml:space="preserve">
+        <value>gramme</value>
+    </data>
+    <data name="Unit_Mass_Pound" xml:space="preserve">
+        <value>livre</value>
+    </data>
+
+    <!-- Unités électriques -->
+    <data name="Unit_Electrical_Volt" xml:space="preserve">
+        <value>volt</value>
+    </data>
+    <data name="Unit_Electrical_Ampere" xml:space="preserve">
+        <value>ampère</value>
+    </data>
+    <data name="Unit_Electrical_Watt" xml:space="preserve">
+        <value>watt</value>
+    </data>
+    <data name="Unit_Electrical_Kilowatt" xml:space="preserve">
+        <value>kilowatt</value>
+    </data>
+    <data name="Unit_Electrical_KilowattHour" xml:space="preserve">
+        <value>kilowatt-heure</value>
+    </data>
+    <data name="Unit_Electrical_Ohm" xml:space="preserve">
+        <value>ohm</value>
+    </data>
+
+    <!-- Unités de fréquence -->
+    <data name="Unit_Frequency_Hertz" xml:space="preserve">
+        <value>hertz</value>
+    </data>
+    <data name="Unit_Frequency_Kilohertz" xml:space="preserve">
+        <value>kilohertz</value>
+    </data>
+    <data name="Unit_Frequency_Rpm" xml:space="preserve">
+        <value>tours par minute</value>
+    </data>
+
+    <!-- Unités de concentration -->
+    <data name="Unit_Concentration_Ppm" xml:space="preserve">
+        <value>parties par million</value>
+    </data>
+    <data name="Unit_Concentration_Ppb" xml:space="preserve">
+        <value>parties par milliard</value>
+    </data>
+    <data name="Unit_Concentration_MgPerLiter" xml:space="preserve">
+        <value>milligrammes par litre</value>
+    </data>
+    <data name="Unit_Concentration_Percent" xml:space="preserve">
+        <value>pourcentage</value>
+    </data>
+
+    <!-- Unités pH et chimiques -->
+    <data name="Unit_pH" xml:space="preserve">
+        <value>pH</value>
+    </data>
+    <data name="Unit_Conductivity_Siemens" xml:space="preserve">
+        <value>siemens par mètre</value>
+    </data>
+    <data name="Unit_Conductivity_MicroSiemens" xml:space="preserve">
+        <value>microsiemens par centimètre</value>
+    </data>
+
+    <!-- Unités de temps -->
+    <data name="Unit_Time_Second" xml:space="preserve">
+        <value>seconde</value>
+    </data>
+    <data name="Unit_Time_Minute" xml:space="preserve">
+        <value>minute</value>
+    </data>
+    <data name="Unit_Time_Hour" xml:space="preserve">
+        <value>heure</value>
+    </data>
+
+    <!-- Unités de vitesse -->
+    <data name="Unit_Velocity_MeterPerSecond" xml:space="preserve">
+        <value>mètre par seconde</value>
+    </data>
+    <data name="Unit_Velocity_KilometerPerHour" xml:space="preserve">
+        <value>kilomètre par heure</value>
+    </data>
+
+    <!-- Symboles -->
     <data name="Symbol_Temperature_Celsius" xml:space="preserve">
-    <value>°C</value>
-  </data>
+        <value>°C</value>
+    </data>
     <data name="Symbol_Temperature_Fahrenheit" xml:space="preserve">
-    <value>°F</value>
-  </data>
+        <value>°F</value>
+    </data>
+    <data name="Symbol_Temperature_Kelvin" xml:space="preserve">
+        <value>K</value>
+    </data>
+    <data name="Symbol_Pressure_Pascal" xml:space="preserve">
+        <value>Pa</value>
+    </data>
+    <data name="Symbol_Pressure_Bar" xml:space="preserve">
+        <value>bar</value>
+    </data>
+    <data name="Symbol_Pressure_Psi" xml:space="preserve">
+        <value>psi</value>
+    </data>
+    <data name="Symbol_Pressure_Atm" xml:space="preserve">
+        <value>atm</value>
+    </data>
+    <data name="Symbol_Pressure_Torr" xml:space="preserve">
+        <value>Torr</value>
+    </data>
     <data name="Symbol_FlowRate_CubicMeterPerSecond" xml:space="preserve">
-    <value>m³/s</value>
-  </data>
+        <value>m³/s</value>
+    </data>
+    <data name="Symbol_FlowRate_LiterPerSecond" xml:space="preserve">
+        <value>L/s</value>
+    </data>
+    <data name="Symbol_FlowRate_LiterPerMinute" xml:space="preserve">
+        <value>L/min</value>
+    </data>
     <data name="Symbol_FlowRate_GallonPerMinute" xml:space="preserve">
-    <value>gal/min</value>
-  </data>
+        <value>gal/min</value>
+    </data>
+    <data name="Symbol_Volume_CubicMeter" xml:space="preserve">
+        <value>m³</value>
+    </data>
+    <data name="Symbol_Volume_Liter" xml:space="preserve">
+        <value>L</value>
+    </data>
+    <data name="Symbol_Volume_Gallon" xml:space="preserve">
+        <value>gal</value>
+    </data>
+    <data name="Symbol_Length_Meter" xml:space="preserve">
+        <value>m</value>
+    </data>
+    <data name="Symbol_Length_Centimeter" xml:space="preserve">
+        <value>cm</value>
+    </data>
+    <data name="Symbol_Length_Millimeter" xml:space="preserve">
+        <value>mm</value>
+    </data>
+    <data name="Symbol_Length_Foot" xml:space="preserve">
+        <value>pi</value>
+    </data>
+    <data name="Symbol_Length_Inch" xml:space="preserve">
+        <value>po</value>
+    </data>
+    <data name="Symbol_Mass_Kilogram" xml:space="preserve">
+        <value>kg</value>
+    </data>
+    <data name="Symbol_Mass_Gram" xml:space="preserve">
+        <value>g</value>
+    </data>
+    <data name="Symbol_Mass_Pound" xml:space="preserve">
+        <value>lb</value>
+    </data>
+    <data name="Symbol_Electrical_Volt" xml:space="preserve">
+        <value>V</value>
+    </data>
+    <data name="Symbol_Electrical_Ampere" xml:space="preserve">
+        <value>A</value>
+    </data>
+    <data name="Symbol_Electrical_Watt" xml:space="preserve">
+        <value>W</value>
+    </data>
+    <data name="Symbol_Electrical_Kilowatt" xml:space="preserve">
+        <value>kW</value>
+    </data>
+    <data name="Symbol_Electrical_KilowattHour" xml:space="preserve">
+        <value>kWh</value>
+    </data>
+    <data name="Symbol_Electrical_Ohm" xml:space="preserve">
+        <value>Ω</value>
+    </data>
+    <data name="Symbol_Frequency_Hertz" xml:space="preserve">
+        <value>Hz</value>
+    </data>
+    <data name="Symbol_Frequency_Kilohertz" xml:space="preserve">
+        <value>kHz</value>
+    </data>
+    <data name="Symbol_Frequency_Rpm" xml:space="preserve">
+        <value>tr/min</value>
+    </data>
+    <data name="Symbol_Concentration_Ppm" xml:space="preserve">
+        <value>ppm</value>
+    </data>
+    <data name="Symbol_Concentration_Ppb" xml:space="preserve">
+        <value>ppb</value>
+    </data>
+    <data name="Symbol_Concentration_MgPerLiter" xml:space="preserve">
+        <value>mg/L</value>
+    </data>
+    <data name="Symbol_Concentration_Percent" xml:space="preserve">
+        <value>%</value>
+    </data>
+    <data name="Symbol_pH" xml:space="preserve">
+        <value>pH</value>
+    </data>
+    <data name="Symbol_Conductivity_Siemens" xml:space="preserve">
+        <value>S/m</value>
+    </data>
+    <data name="Symbol_Conductivity_MicroSiemens" xml:space="preserve">
+        <value>μS/cm</value>
+    </data>
+    <data name="Symbol_Time_Second" xml:space="preserve">
+        <value>s</value>
+    </data>
+    <data name="Symbol_Time_Minute" xml:space="preserve">
+        <value>min</value>
+    </data>
+    <data name="Symbol_Time_Hour" xml:space="preserve">
+        <value>h</value>
+    </data>
+    <data name="Symbol_Velocity_MeterPerSecond" xml:space="preserve">
+        <value>m/s</value>
+    </data>
+    <data name="Symbol_Velocity_KilometerPerHour" xml:space="preserve">
+        <value>km/h</value>
+    </data>
 </root>
