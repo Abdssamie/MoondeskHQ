@@ -94,7 +94,7 @@ public class AlertsControllerTests
         // Arrange
         var alert = new Alert { Id = 1, Acknowledged = false, OrganizationId = TestOrgId };
         _mockRepo.Setup(r => r.GetAlertAsync(1)).ReturnsAsync(alert);
-        _mockRepo.Setup(r => r.UpdateAlertAsync(1, It.IsAny<Alert>())).ReturnsAsync((Alert?)alert);
+        _mockRepo.Setup(r => r.UpdateAlertAsync(1, It.IsAny<Alert>())).ReturnsAsync(alert);
 
         // Act
         var result = await _controller.Acknowledge(1);
@@ -110,7 +110,9 @@ public class AlertsControllerTests
     public async Task Acknowledge_ReturnsNotFound_WhenAlertDoesNotExist()
     {
         // Arrange
-        _mockRepo.Setup(r => r.GetAlertAsync(999)).ReturnsAsync((Alert?)null);
+#pragma warning disable CS8620
+        _mockRepo.Setup(r => r.GetAlertAsync(999)).ReturnsAsync(null as Alert);
+#pragma warning restore CS8620
 
         // Act
         var result = await _controller.Acknowledge(999);
