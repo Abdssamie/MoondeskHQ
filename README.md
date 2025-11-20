@@ -1,66 +1,125 @@
-# Moondesk
+# Moondesk - Water Quality Monitoring Platform
 
-Moondesk is a .NET Avalonia UI application designed to provide a comprehensive solution for water quality management and treatment process optimization. It offers features for data entry, chat-based interactions, and dashboard visualizations to help users monitor and manage water-related data efficiently.
+**Real-time IIoT monitoring for water treatment facilities, distribution networks, and environmental compliance**
 
-![Diagram](AquaPP/Assets/diagram-export-11-16-2025-9_53_24-PM.png)
+Moondesk is an industrial IoT platform purpose-built for water quality management. Monitor pH, turbidity, chlorine levels, flow rates, and pressure across your entire water infrastructure with sub-second latency and intelligent alerting.
 
-## Features
+![Architecture Diagram](AquaPP/Assets/diagram-export-11-16-2025-9_53_24-PM.png)
 
-*   **Data Entry:** Input and manage water quality readings and other relevant data.
-*   **Chat Interface:** Interact with an AI agent for insights and assistance related to water treatment.
-*   **Dashboard:** Visualize key metrics and trends in water quality and treatment processes.
-*   **Settings:** Configure application preferences and themes.
+## Why Water Quality Monitoring?
 
-## Technologies Used
+Water utilities face critical challenges:
+- **Regulatory Compliance**: EPA/WHO standards require continuous monitoring
+- **Public Health**: Contamination detection must be immediate
+- **Operational Efficiency**: Optimize chemical dosing and energy consumption
+- **Infrastructure Aging**: Early detection of pipe failures and equipment degradation
 
-*   **.NET 9.0:** The core framework for the application logic.
-*   **Avalonia UI:** A cross-platform UI framework for building desktop applications.
-*   **Entity Framework Core:** For database interactions and data persistence.
-*   **SQLite:** The default database used for local data storage.
+Moondesk addresses these with purpose-built features for water operations.
+
+## Core Capabilities
+
+### 🔬 Water-Specific Sensor Support
+- **Chemical Parameters**: pH, chlorine (free/total), fluoride, dissolved oxygen
+- **Physical Parameters**: Turbidity, temperature, conductivity, TDS
+- **Hydraulic Monitoring**: Flow rate, pressure, level sensors
+- **Compliance Reporting**: Automated EPA/WHO threshold alerts
+
+### 📊 Treatment Process Optimization
+- Real-time visualization of treatment stages (coagulation, filtration, disinfection)
+- Chemical dosing correlation with water quality outcomes
+- Energy consumption tracking per treatment process
+- Historical trend analysis for process optimization
+
+### 🚨 Intelligent Alerting
+- Multi-level thresholds (Warning/Critical/Emergency) per water quality parameter
+- Cascade alert logic (e.g., low chlorine → high bacteria risk)
+- Acknowledgment workflow with operator notes
+- SMS/Email integration for critical violations
+
+### 🌐 Multi-Site Management
+- Monitor multiple treatment plants and distribution points
+- Organization-level data isolation (multi-tenant architecture)
+- Geographic asset mapping for distribution networks
+- Remote pump station and reservoir monitoring
+
+## Technical Architecture
+
+### Stack
+- **.NET 10**: High-performance backend API
+- **TimescaleDB**: Optimized time-series storage for sensor data
+- **MQTT/OPC UA**: Industrial protocol support for legacy SCADA integration
+- **SignalR**: Real-time WebSocket updates to dashboards
+- **Entity Framework Core**: Data persistence and migrations
+
+### Deployment
+- **Edge Gateway**: Raspberry Pi for Modbus/BACnet sensor integration
+- **Cloud API**: Docker-containerized backend on VPS
+- **MQTT Broker**: EMQX Cloud for reliable telemetry ingestion
+- **Authentication**: Clerk for secure multi-tenant access
 
 ## Development Environment Setup
 
-To set up the development environment for Moondesk, follow these steps:
-
 1.  **Install .NET SDK:**
-    Ensure you have the .NET 9.0 SDK installed on your machine. You can download it from the official .NET website: [https://dotnet.microsoft.com/download/dotnet/9.0](https://dotnet.microsoft.com/download/dotnet/9.0)
+    Ensure you have the .NET 10.0 SDK installed. Download from: [https://dotnet.microsoft.com/download/dotnet/10.0](https://dotnet.microsoft.com/download/dotnet/10.0)
 
-2.  **Install Visual Studio (Windows) or Rider (Cross-platform):**
-    *   **Visual Studio (Windows):** Download and install Visual Studio with the ".NET desktop development" workload.
-    *   **JetBrains Rider (Cross-platform):** Download and install JetBrains Rider, which provides excellent support for .NET development on Windows, macOS, and Linux.
+2.  **Install IDE:**
+    *   **Visual Studio (Windows):** Install with ".NET desktop development" workload
+    *   **JetBrains Rider (Cross-platform):** Recommended for .NET development on Windows, macOS, and Linux
 
 3.  **Clone the Repository:**
     ```bash
     git clone https://github.com/Abdssamie/aqua-plus-plus.git
-    cd AquaPP
+    cd Moondesk
     ```
-    *(Note: Replace `https://github.com/Abdssamie/aqua-plus-plus.git` with the actual repository URL if it's hosted elsewhere.)*
 
 4.  **Restore NuGet Packages:**
-    Navigate to the project root directory (where `AquaPP.sln` is located) and restore the NuGet packages:
     ```bash
     dotnet restore
     ```
 
 5.  **Apply Database Migrations:**
-    If the application uses a database, apply the migrations to set up the database schema. Ensure you are in the directory containing the `.csproj` file (e.g., `AquaPP/`):
     ```bash
-    dotnet ef database update
+    dotnet ef database update --project Moondesk.DataAccess
     ```
 
 ## Running the Application
 
-After setting up the development environment, you can run the AquaPP application:
-
-1.  **Build the Project:**
-    Navigate to the project root directory (where `AquaPP.sln` is located) and build the solution:
+1.  **Build the Solution:**
     ```bash
     dotnet build
     ```
 
-2.  **Run the Application:**
-    From the project root directory, you can run the application:
+2.  **Run the API:**
     ```bash
-    dotnet run --project AquaPP
+    dotnet run --project Moondesk.API
     ```
-    This command will launch the AquaPP desktop application.
+
+3.  **Run the Edge Simulator (Optional):**
+    ```bash
+    dotnet run --project Moondesk.Edge.Simulator
+    ```
+
+## Use Cases
+
+### Municipal Water Treatment
+- Monitor chlorine residual across distribution network
+- Track turbidity through filtration process
+- Alert operators to pH deviations before EPA violations
+- Optimize coagulant dosing based on raw water quality
+
+### Industrial Water Systems
+- Cooling tower water quality monitoring
+- Boiler feedwater conductivity tracking
+- Wastewater discharge compliance monitoring
+- Process water contamination detection
+
+### Environmental Monitoring
+- River/lake water quality stations
+- Groundwater monitoring wells
+- Stormwater runoff analysis
+- Aquaculture dissolved oxygen tracking
+
+## License
+
+MIT License - See LICENSE file for details
+

@@ -15,6 +15,8 @@ public class Reading
     
     public double Value { get; set; }
     
+    public Parameter Parameter { get; set; } = Parameter.None;
+    
     public Protocol Protocol { get; set; }
     
     public ReadingQuality Quality { get; set; } = ReadingQuality.Good;

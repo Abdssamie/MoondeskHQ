@@ -1,14 +1,315 @@
-# 📋 Moondesk Project Specifications
+# 📋 Moondesk - Water Quality Monitoring Platform Specifications
 
-> **Role**: Product Manager & Software Designer  
-> **Purpose**: Comprehensive project specifications for the Moondesk IoT monitoring platform  
-> **Audience**: Developers implementing the system
+> **Industry Focus**: Water Treatment & Distribution  
+> **Purpose**: Real-time water quality monitoring, compliance, and treatment optimization  
+> **Target Users**: Water utilities, treatment plant operators, environmental agencies
 
 ---
 
 ## 🎯 System Overview
 
-**Moondesk** is a multi-tenant Industrial IoT monitoring platform designed for real-time sensor data visualization, alerting, and device control. The system enables organizations to monitor industrial assets (pumps, tanks, compressors, etc.) through connected sensors, receive real-time telemetry, and respond to critical events.
+**Moondesk** is a specialized Industrial IoT platform for water quality monitoring and management. The system enables water utilities to monitor critical parameters (pH, chlorine, turbidity, pressure, flow) across treatment facilities and distribution networks, ensuring regulatory compliance and public health safety.
+
+### Core Value Proposition
+- **Regulatory Compliance**: Automated EPA/WHO threshold monitoring and reporting
+- **Public Health Protection**: Real-time contamination detection with immediate alerts
+- **Treatment Optimization**: Data-driven chemical dosing and process control
+- **Multi-Site Management**: Centralized monitoring of treatment plants and distribution points
+- **Predictive Maintenance**: Early detection of equipment failures and pipe breaks
+
+---
+
+## 🏗️ Water Industry Architecture
+
+### Water Treatment Monitoring Flow
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Water Treatment Plant (On-Premises)                    │
+│  ┌──────────────────────────────────────────┐           │
+│  │  Treatment Stages                        │           │
+│  │  • Raw Water Intake                      │           │
+│  │  • Coagulation/Flocculation             │           │
+│  │  • Sedimentation                         │           │
+│  │  • Filtration                            │           │
+│  │  • Disinfection (Chlorination)          │           │
+│  │  • Distribution                          │           │
+│  └──────────────┬───────────────────────────┘           │
+│                 │                                        │
+│  ┌──────────────▼───────────────────────────┐           │
+│  │  Water Quality Sensors (Modbus/BACnet)   │           │
+│  │  • pH Meters                             │           │
+│  │  • Turbidity Sensors                     │           │
+│  │  • Chlorine Analyzers                    │           │
+│  │  • Flow Meters                           │           │
+│  │  • Pressure Transducers                  │           │
+│  └──────────────┬───────────────────────────┘           │
+│                 │                                        │
+│  ┌──────────────▼───────────────────────────┐           │
+│  │  Edge Gateway (Raspberry Pi)             │           │
+│  │  • Protocol Translation                  │           │
+│  │  • Local Data Buffering                  │           │
+│  │  • MQTT Publishing                       │           │
+│  └──────────────┬───────────────────────────┘           │
+└─────────────────┼────────────────────────────────────────┘
+                  │ MQTT over TLS
+                  │ Internet
+                  ▼
+┌─────────────────────────────────────────────────────────┐
+│  Moondesk Cloud Platform                                │
+│  ┌─────────────────────────────┐                        │
+│  │  Water Quality API          │                        │
+│  │  • Real-time Ingestion      │                        │
+│  │  • EPA Compliance Checks    │                        │
+│  │  • Treatment Analytics      │                        │
+│  │  • Alert Management         │                        │
+│  │  • Historical Reporting     │                        │
+│  └─────────────────────────────┘                        │
+│  ┌─────────────────────────────┐                        │
+│  │  TimescaleDB                │                        │
+│  │  • Water Quality Time-Series│                        │
+│  │  • Compliance Audit Logs    │                        │
+│  └─────────────────────────────┘                        │
+└─────────────────────────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────────────┐
+│  Operator Dashboard                                     │
+│  • Treatment Process Visualization                      │
+│  • Real-time Parameter Monitoring                       │
+│  • Compliance Reports                                   │
+│  • Alert Management                                     │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📦 Project 1: Moondesk.Domain
+
+### Water Quality Domain Models
+
+#### 1. **WaterAsset** (Treatment Equipment)
+- **Types**: 
+  - Treatment Plant
+  - Pump Station
+  - Reservoir/Tank
+  - Distribution Point
+  - Monitoring Station
+- **Properties**: 
+  - Capacity (MGD - Million Gallons per Day)
+  - Treatment Processes
+  - Service Population
+  - GPS Coordinates
+- **Business Logic**: 
+  - Calculate treatment efficiency
+  - Track chemical inventory
+  - Monitor energy consumption
+
+#### 2. **WaterQualitySensor**
+- **Chemical Sensors**:
+  - pH Meter (6.5-8.5 range, EPA compliance)
+  - Free Chlorine Analyzer (0.2-4.0 mg/L)
+  - Total Chlorine Analyzer
+  - Fluoride Sensor
+  - Dissolved Oxygen (DO)
+  
+- **Physical Sensors**:
+  - Turbidity Meter (0-5 NTU for drinking water)
+  - Temperature Sensor
+  - Conductivity Meter
+  - Total Dissolved Solids (TDS)
+  
+- **Hydraulic Sensors**:
+  - Flow Meter (GPM/MGD)
+  - Pressure Transducer (PSI)
+  - Level Sensor (feet/meters)
+
+- **Compliance Thresholds**:
+  - EPA Primary Standards (health-based)
+  - EPA Secondary Standards (aesthetic)
+  - WHO Guidelines
+  - State-specific regulations
+
+#### 3. **WaterQualityReading**
+- **Extended Properties**:
+  - Compliance Status (Pass/Fail/Warning)
+  - Treatment Stage (Raw/Filtered/Finished)
+  - Sample Location
+  - Lab Verification Flag
+- **Validation Logic**:
+  - Range validation per EPA standards
+  - Cross-parameter validation (e.g., pH affects chlorine efficacy)
+  - Data quality indicators
+
+#### 4. **ComplianceAlert**
+- **Severity Levels**:
+  - **Advisory**: Approaching threshold (90% of limit)
+  - **Warning**: Exceeded secondary standard
+  - **Violation**: Exceeded primary standard (public notification required)
+  - **Emergency**: Immediate health risk (boil water advisory)
+  
+- **Alert Types**:
+  - High Turbidity (>5 NTU)
+  - Low Chlorine Residual (<0.2 mg/L)
+  - pH Out of Range (<6.5 or >8.5)
+  - High Bacteria Risk (low chlorine + high temperature)
+  - Pressure Loss (potential pipe break)
+  
+- **Workflow**:
+  - Auto-notification to operators
+  - Escalation to supervisors if unacknowledged
+  - Regulatory reporting integration
+
+---
+
+## 📦 Project 2: Moondesk.DataAccess
+
+### Water-Specific Data Optimization
+
+#### 1. **TimescaleDB Hypertables**
+- **water_quality_readings**: Partitioned by time (1-hour chunks)
+- **compliance_events**: Audit trail for regulatory reporting
+- **treatment_batches**: Track chemical dosing per batch
+
+#### 2. **Continuous Aggregates**
+- **hourly_water_quality**: Pre-computed averages for dashboards
+- **daily_compliance_summary**: EPA reporting format
+- **treatment_efficiency**: Chemical usage vs. water quality outcomes
+
+#### 3. **Data Retention Policies**
+- Raw readings: 90 days (EPA minimum)
+- Hourly aggregates: 3 years
+- Compliance violations: 10 years (regulatory requirement)
+- Audit logs: Indefinite
+
+#### 4. **Water Industry Queries**
+- Chlorine residual trends across distribution network
+- Turbidity breakthrough detection during filtration
+- Chemical dosing correlation with raw water quality
+- Pressure zone monitoring for leak detection
+
+---
+
+## 📦 Project 3: Moondesk.API
+
+### Water Quality Endpoints
+
+#### **WaterAssetsController** (`/api/water/assets`)
+- `GET /api/water/assets/treatment-plants`: List all treatment facilities
+- `GET /api/water/assets/{id}/treatment-process`: Get current treatment stage data
+- `GET /api/water/assets/{id}/efficiency`: Calculate treatment efficiency metrics
+- `POST /api/water/assets/{id}/chemical-dose`: Log chemical dosing event
+
+#### **WaterQualityController** (`/api/water/quality`)
+- `GET /api/water/quality/compliance-status`: Current compliance across all sites
+- `GET /api/water/quality/parameters`: Real-time water quality dashboard data
+- `GET /api/water/quality/trends`: Historical trends for specific parameters
+- `POST /api/water/quality/lab-verification`: Submit lab test results
+
+#### **ComplianceController** (`/api/water/compliance`)
+- `GET /api/water/compliance/violations`: List EPA violations
+- `GET /api/water/compliance/reports/monthly`: Generate monthly compliance report
+- `POST /api/water/compliance/alerts/{id}/acknowledge`: Operator acknowledgment
+- `GET /api/water/compliance/audit-trail`: Regulatory audit log
+
+#### **TreatmentController** (`/api/water/treatment`)
+- `GET /api/water/treatment/chemical-inventory`: Current chemical stock levels
+- `POST /api/water/treatment/optimize-dosing`: AI-driven dosing recommendations
+- `GET /api/water/treatment/energy-usage`: Energy consumption per treatment stage
+
+### Water-Specific Background Services
+
+#### **ComplianceMonitoringService**
+- Continuously evaluate readings against EPA/WHO thresholds
+- Generate compliance reports
+- Auto-escalate violations to regulatory portals
+
+#### **TreatmentOptimizationService**
+- Analyze chemical dosing effectiveness
+- Recommend dosing adjustments based on raw water quality
+- Track cost savings from optimization
+
+#### **PredictiveMaintenanceService**
+- Detect sensor drift (calibration needed)
+- Identify pump performance degradation
+- Predict filter breakthrough based on turbidity trends
+
+---
+
+## 📦 Project 4: Moondesk.Edge.Simulator
+
+### Water Treatment Simulation
+
+#### Realistic Water Quality Patterns
+- **pH**: Stable baseline with gradual drift (simulates chemical dosing)
+- **Turbidity**: Spikes during rain events, gradual decline through filtration
+- **Chlorine**: Decay over time in distribution network
+- **Flow Rate**: Diurnal patterns (high morning/evening, low overnight)
+- **Pressure**: Drops during high-demand periods
+
+#### Treatment Process Simulation
+```json
+{
+  "treatmentPlant": {
+    "stages": [
+      {
+        "name": "Raw Water Intake",
+        "sensors": ["turbidity", "temperature", "pH"]
+      },
+      {
+        "name": "Post-Filtration",
+        "sensors": ["turbidity", "flow"]
+      },
+      {
+        "name": "Post-Chlorination",
+        "sensors": ["freeChlorine", "pH"]
+      },
+      {
+        "name": "Distribution Entry",
+        "sensors": ["pressure", "flow", "chlorine"]
+      }
+    ]
+  }
+}
+```
+
+---
+
+## 🎯 Water Industry Use Cases
+
+### Municipal Water Utility
+- Monitor 5 treatment plants + 20 distribution points
+- Track chlorine residual across 100-mile distribution network
+- Automated EPA compliance reporting
+- Public notification system for violations
+
+### Industrial Water Treatment
+- Cooling tower water quality monitoring
+- Boiler feedwater chemistry control
+- Wastewater discharge compliance
+- Process water contamination detection
+
+### Environmental Monitoring
+- River/lake water quality stations
+- Groundwater monitoring wells
+- Stormwater runoff analysis
+- Aquaculture dissolved oxygen tracking
+
+---
+
+## 📊 Success Metrics
+
+- **Compliance**: 100% EPA violation detection within 2 seconds
+- **Uptime**: 99.9% sensor data availability
+- **Response Time**: <500ms from sensor reading to dashboard update
+- **Data Retention**: 90 days raw + 3 years aggregated
+- **Alert Accuracy**: <1% false positive rate for compliance alerts
+
+---
+
+**Document Version**: 2.0 - Water Quality Focus  
+**Last Updated**: 2025-11-20  
+**Target Framework**: .NET 10.0
 
 ### Core Value Proposition
 - **Real-time Monitoring**: Live sensor data streaming with sub-second latency

@@ -18,6 +18,8 @@ public class Sensor
     
     public SensorType Type { get; set; }
     
+    public Parameter Parameter { get; set; } = Parameter.None;
+    
     public string Unit { get; set; } = string.Empty; // e.g., "°C", "PSI", "Hz", "L/min"
     
     public double? ThresholdLow { get; set; }

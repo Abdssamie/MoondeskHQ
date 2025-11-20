@@ -1,52 +1,56 @@
-# 🚀 Moondesk.API
+# 🚀 Moondesk.API - Water Quality Monitoring Backend
 
 ## Overview
-The **API** project is the central backend service that orchestrates all business logic. It exposes REST endpoints, handles real-time WebSocket connections via SignalR, ingests MQTT telemetry, and manages device communication.
+The **API** project is the central backend service for water quality monitoring. It exposes REST endpoints for water treatment data, handles real-time WebSocket connections for live sensor updates, ingests MQTT telemetry from water quality sensors, and manages EPA compliance alerting.
 
 ## Purpose
-- Expose RESTful API for frontend consumption
+- Expose RESTful API for water quality dashboards
 - Authenticate/authorize requests using Clerk JWT tokens
-- Provide real-time data push via SignalR WebSockets
-- Ingest MQTT telemetry from edge devices
-- Persist data to TimescaleDB
-- Execute threshold-based alerting logic
-- Publish commands to IoT devices
+- Provide real-time water quality data push via SignalR
+- Ingest MQTT telemetry from treatment plants and distribution networks
+- Persist water quality readings to TimescaleDB
+- Execute EPA/WHO compliance threshold alerting
+- Publish control commands to treatment equipment
 
 ---
 
 ## Architecture
 
 ```
-┌─────────────────┐
-│  Next.js UI     │
-└────────┬────────┘
-         │ HTTP/WebSocket
+┌─────────────────────────────────────┐
+│  Water Treatment Plant              │
+│  pH, Chlorine, Turbidity Sensors    │
+└────────┬────────────────────────────┘
+         │ MQTT
          ▼
 ┌─────────────────────────────────────┐
 │      Moondesk.API                   │
 │  ┌──────────────────────────────┐   │
-│  │  REST Controllers            │   │
-│  │  - DevicesController         │   │
-│  │  - SensorsController         │   │
-│  │  - ReadingsController        │   │
-│  │  - AlertsController          │   │
+│  │  Water Quality Controllers   │   │
+│  │  - WaterAssetsController     │   │
+│  │  - WaterQualityController    │   │
+│  │  - ComplianceController      │   │
+│  │  - TreatmentController       │   │
 │  └──────────────────────────────┘   │
 │                                      │
 │  ┌──────────────────────────────┐   │
 │  │  SignalR Hub                 │   │
-│  │  - TelemetryHub              │   │
+│  │  - WaterQualityHub           │   │
 │  └──────────────────────────────┘   │
 │                                      │
 │  ┌──────────────────────────────┐   │
 │  │  Background Services         │   │
-│  │  - MqttIngestionService      │   │
+│  │  - ComplianceMonitoring      │   │
+│  │  - TreatmentOptimization     │   │
 │  └──────────────────────────────┘   │
 └─────────┬────────────────────────────┘
           │
           ▼
 ┌─────────────────┐      ┌──────────────┐
 │  TimescaleDB    │      │  EMQX Cloud  │
-└─────────────────┘      └──────────────┘
+│  Water Quality  │      │  MQTT Broker │
+│  Time-Series    │      └──────────────┘
+└─────────────────┘
 ```
 
 ---
