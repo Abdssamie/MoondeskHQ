@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Moondesk.Domain.Enums;
 using Moondesk.Domain.Interfaces.Repositories;
+using Moondesk.Domain.Interfaces.Services;
 using Moondesk.Domain.Models.IoT;
 using MQTTnet;
 using MQTTnet.Protocol;
@@ -106,6 +107,7 @@ public class MqttIngestionService : BackgroundService
             var readingRepo = scope.ServiceProvider.GetRequiredService<IReadingRepository>();
             var alertRepo = scope.ServiceProvider.GetRequiredService<IAlertRepository>();
             var sensorRepo = scope.ServiceProvider.GetRequiredService<ISensorRepository>();
+            var notificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
 
             var reading = new Reading
             {
@@ -120,6 +122,12 @@ public class MqttIngestionService : BackgroundService
             await readingRepo.BulkInsertReadingsAsync(new[] { reading });
             _logger.LogInformation("Stored reading for sensor {SensorId}: {Value}", 
                 telemetry.SensorId, telemetry.Value);
+
+            // Send real-time update via SignalR
+            if (notificationService is SignalRNotificationService signalRService)
+            {
+                await signalRService.SendSensorReadingAsync(reading, organizationId);
+            }
 
             // Check thresholds and create alerts
             var sensor = await sensorRepo.GetByIdAsync((int)telemetry.SensorId);
@@ -141,6 +149,9 @@ public class MqttIngestionService : BackgroundService
 
                 await alertRepo.CreateAlertAsync(alert);
                 _logger.LogWarning("Alert created for sensor {SensorId}", telemetry.SensorId);
+
+                // Send alert notification
+                await notificationService.SendAlertNotificationAsync(alert, organizationId);
             }
         }
         catch (Exception ex)

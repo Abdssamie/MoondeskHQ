@@ -26,6 +26,7 @@
     <ProjectReference Include="..\Moondesk.API\Moondesk.API.csproj" />
     <ProjectReference Include="..\Moondesk.DataAccess\Moondesk.DataAccess.csproj" />
     <ProjectReference Include="..\Moondesk.Domain\Moondesk.Domain.csproj" />
+    <ProjectReference Include="..\Moondesk.BackgroundServices\Moondesk.BackgroundServices.csproj" />
   </ItemGroup>
 
 </Project>

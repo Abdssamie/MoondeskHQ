@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using System.Threading.RateLimiting;
 using Moondesk.API.Extensions;
 using Moondesk.API.Authorization;
+using Moondesk.API.Hubs;
+using Moondesk.BackgroundServices.Services;
 using Moondesk.DataAccess.Configuration;
 using Moondesk.DataAccess.Repositories;
+using Moondesk.Domain.Interfaces.Services;
 using Serilog;
 
 // Configure logging first
@@ -35,6 +38,12 @@ try
     // Register DataAccess layer
     builder.Services.AddMoondeskDataAccess(connectionString);
     builder.Services.AddRepositories();
+
+    // Register notification service
+    builder.Services.AddSingleton<INotificationService, SignalRNotificationService>();
+
+    // Add SignalR
+    builder.Services.AddSignalR();
 
     // Add authorization
     builder.Services.AddAuthorization(options =>
@@ -107,9 +116,10 @@ try
     {
         options.AddDefaultPolicy(policy =>
         {
-            policy.AllowAnyOrigin()
+            policy.WithOrigins("http://localhost:3000", "https://yourdomain.com")
                   .AllowAnyMethod()
-                  .AllowAnyHeader();
+                  .AllowAnyHeader()
+                  .AllowCredentials(); // Required for SignalR
         });
     });
 
@@ -156,8 +166,9 @@ try
     app.UseRouting();
     app.UseAuthorization();
     
-    // Map controllers and health endpoint
+    // Map controllers, SignalR hub, and health endpoint
     app.MapControllers();
+    app.MapHub<SensorDataHub>("/hubs/sensordata");
     app.MapHealthChecks("/health");
 
     Log.Information("Moondesk Host application starting on {Environment}...", app.Environment.EnvironmentName);
