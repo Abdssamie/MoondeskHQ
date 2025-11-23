@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Models.IoT;
@@ -5,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Moondesk.API.Controllers;
 
+[Authorize(Policy = "OrgMember")]
 [SwaggerTag("Manage IoT assets (equipment) within an organization")]
 public class AssetsController : BaseApiController
 {

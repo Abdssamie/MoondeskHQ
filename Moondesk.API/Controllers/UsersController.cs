@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moondesk.Domain.Interfaces.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
@@ -5,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Moondesk.API.Controllers;
 
 [SwaggerTag("User management within organization scope")]
+[Authorize(Policy = "OrgAdmin")]
 public class UsersController : BaseApiController
 {
     private readonly IUserRepository _userRepository;

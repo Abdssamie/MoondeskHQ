@@ -1,9 +1,12 @@
-using System.Net;
-using System.Net.Http.Json;
+using System.Security.Claims;
 using Moq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moondesk.API.Controllers;
 using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Models.IoT;
+using Moondesk.Domain.Models;
+using Moondesk.Domain.Enums;
 
 namespace Moondesk.API.Tests;
 
@@ -12,17 +15,30 @@ public class AssetsControllerTests
     private readonly Mock<IAssetRepository> _mockRepo;
     private readonly AssetsController _controller;
     private const string TestOrgId = "org_test123";
+    private const string TestUserId = "user_test123";
 
     public AssetsControllerTests()
     {
         _mockRepo = new Mock<IAssetRepository>();
         _controller = new AssetsController(_mockRepo.Object);
         
-        // Simulate authenticated request with organization
-        var httpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
-        httpContext.Items["UserId"] = "user_test123";
+        // Simulate authenticated request with claims
+        var claims = new List<Claim>
+        {
+            new Claim("sub", TestUserId),
+            new Claim("org_id", TestOrgId)
+        };
+        var identity = new ClaimsIdentity(claims, "TestAuth");
+        var claimsPrincipal = new ClaimsPrincipal(identity);
+        
+        var httpContext = new DefaultHttpContext
+        {
+            User = claimsPrincipal
+        };
+        httpContext.Items["UserId"] = TestUserId;
         httpContext.Items["OrganizationId"] = TestOrgId;
-        _controller.ControllerContext = new Microsoft.AspNetCore.Mvc.ControllerContext
+        
+        _controller.ControllerContext = new ControllerContext
         {
             HttpContext = httpContext
         };
@@ -43,7 +59,7 @@ public class AssetsControllerTests
         var result = await _controller.GetAll();
 
         // Assert
-        var okResult = Assert.IsType<Microsoft.AspNetCore.Mvc.OkObjectResult>(result);
+        var okResult = Assert.IsType<OkObjectResult>(result);
         var returnedAssets = Assert.IsAssignableFrom<IEnumerable<Asset>>(okResult.Value);
         Assert.Equal(2, returnedAssets.Count());
     }

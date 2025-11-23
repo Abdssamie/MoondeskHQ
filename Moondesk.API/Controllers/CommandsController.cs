@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Models.IoT;
@@ -6,6 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Moondesk.API.Controllers;
 
 [SwaggerTag("Send commands to IoT devices")]
+[Authorize(Policy = "OrgMember")]
 public class CommandsController : BaseApiController
 {
     private readonly ICommandRepository _commandRepository;

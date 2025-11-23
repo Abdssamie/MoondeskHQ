@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moondesk.Domain.Interfaces.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
@@ -5,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Moondesk.API.Controllers;
 
 [SwaggerTag("View and manage threshold violation alerts")]
+[Authorize(Policy = "OrgMember")]
 public class AlertsController : BaseApiController
 {
     private readonly IAlertRepository _alertRepository;

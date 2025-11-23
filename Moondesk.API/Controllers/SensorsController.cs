@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Models.IoT;
@@ -6,6 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Moondesk.API.Controllers;
 
 [SwaggerTag("Manage sensors attached to assets")]
+[Authorize(Policy = "OrgMember")]
 public class SensorsController : BaseApiController
 {
     private readonly ISensorRepository _sensorRepository;

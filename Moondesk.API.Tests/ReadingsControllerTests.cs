@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -12,6 +13,7 @@ public class ReadingsControllerTests
     private readonly Mock<IReadingRepository> _mockRepo;
     private readonly ReadingsController _controller;
     private const string TestOrgId = "org_test123";
+    private const string TestUserId = "user_test123";
 
     public ReadingsControllerTests()
     {

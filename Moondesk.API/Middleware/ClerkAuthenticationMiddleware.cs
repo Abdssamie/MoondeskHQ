@@ -1,6 +1,7 @@
 using Clerk.BackendAPI.Helpers.Jwks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace Moondesk.API.Middleware;
 
@@ -22,6 +23,14 @@ public class ClerkAuthenticationMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
+        // Skip authentication for webhook and health endpoints
+        if (context.Request.Path.StartsWithSegments("/api/v1/webhooks") ||
+            context.Request.Path.StartsWithSegments("/health"))
+        {
+            await _next(context);
+            return;
+        }
+
         var options = new AuthenticateRequestOptions(
             secretKey: _secretKey,
             authorizedParties: new[] { "" }
@@ -40,9 +49,18 @@ public class ClerkAuthenticationMiddleware
             context.Items["UserId"] = userId;
             context.Items["OrganizationId"] = orgId;
             
+            // Set ClaimsPrincipal for authorization
+            var identity = new ClaimsIdentity(requestState.Claims.Claims, "Clerk");
+            context.User = new ClaimsPrincipal(identity);
+            
             _logger.LogDebug("Authenticated user {UserId} from org {OrgId}", userId, orgId);
+            await _next(context);
         }
-
-        await _next(context);
+        else
+        {
+            _logger.LogWarning("Unauthenticated request to {Path}", context.Request.Path);
+            context.Response.StatusCode = 401;
+            await context.Response.WriteAsJsonAsync(new { error = "Unauthorized" });
+        }
     }
 }

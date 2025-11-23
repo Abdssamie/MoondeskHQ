@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moondesk.Domain.Interfaces.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
@@ -5,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Moondesk.API.Controllers;
 
 [SwaggerTag("Query sensor telemetry data")]
+[Authorize(Policy = "OrgMember")]
 public class ReadingsController : BaseApiController
 {
     private readonly IReadingRepository _readingRepository;

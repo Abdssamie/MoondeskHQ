@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.Authorization;
 using System.Threading.RateLimiting;
 using Moondesk.API.Extensions;
+using Moondesk.API.Authorization;
 using Moondesk.DataAccess.Configuration;
 using Moondesk.DataAccess.Repositories;
 using Serilog;
@@ -33,6 +35,19 @@ try
     // Register DataAccess layer
     builder.Services.AddMoondeskDataAccess(connectionString);
     builder.Services.AddRepositories();
+
+    // Add authorization
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("OrgMember", policy =>
+            policy.Requirements.Add(new OrganizationMemberRequirement()));
+        
+        options.AddPolicy("OrgAdmin", policy =>
+            policy.Requirements.Add(new OrganizationAdminRequirement()));
+    });
+    
+    builder.Services.AddSingleton<IAuthorizationHandler, OrganizationMemberHandler>();
+    builder.Services.AddSingleton<IAuthorizationHandler, OrganizationAdminHandler>();
 
     // Add API services
     builder.Services.AddControllers()
