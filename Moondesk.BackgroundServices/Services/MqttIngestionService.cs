@@ -1,14 +1,9 @@
-using System.Text;
 using System.Text.Json;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Moondesk.Domain.Enums;
 using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Interfaces.Services;
 using Moondesk.Domain.Models.IoT;
 using MQTTnet;
-using MQTTnet.Protocol;
 
 namespace Moondesk.BackgroundServices.Services;
 
@@ -102,6 +97,12 @@ public class MqttIngestionService : BackgroundService
                 return;
             }
 
+            if (deviceId == telemetry.SensorId.ToString())
+            {
+                _logger.LogInformation("deviceId in topic does not match the sensorId in the payload");
+                throw new Exception("There is inconsistency between the telemetry topic and the payload");
+            }
+ 
             // Store reading in database
             using var scope = _serviceProvider.CreateScope();
             var readingRepo = scope.ServiceProvider.GetRequiredService<IReadingRepository>();
@@ -168,10 +169,13 @@ public class MqttIngestionService : BackgroundService
         
         var percentOver = Math.Abs((value - threshold) / threshold * 100);
 
-        if (percentOver > 50) return AlertSeverity.Emergency;
-        if (percentOver > 25) return AlertSeverity.Critical;
-        if (percentOver > 10) return AlertSeverity.Warning;
-        return AlertSeverity.Info;
+        return percentOver switch
+        {
+            > 50 => AlertSeverity.Emergency,
+            > 25 => AlertSeverity.Critical,
+            > 10 => AlertSeverity.Warning,
+            _ => AlertSeverity.Info
+        };
     }
 
     public override async Task StopAsync(CancellationToken cancellationToken)

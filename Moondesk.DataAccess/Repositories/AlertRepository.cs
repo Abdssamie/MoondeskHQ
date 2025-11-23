@@ -18,15 +18,15 @@ public class AlertRepository : IAlertRepository
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async Task<Alert> GetAlertAsync(long id)
+    public async Task<Alert?> GetAlertAsync(long id)
     {
         try
         {
             var alert = await _context.Alerts
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == id);
-            
-            return alert ?? throw new ArgumentException($"Alert with ID {id} not found");
+
+            return alert;
         }
         catch (Exception ex)
         {

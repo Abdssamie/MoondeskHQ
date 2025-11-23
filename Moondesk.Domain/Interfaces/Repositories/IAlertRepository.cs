@@ -5,7 +5,7 @@ namespace Moondesk.Domain.Interfaces.Repositories;
 
 public interface IAlertRepository
 {
-    Task<Alert> GetAlertAsync(long id);
+    Task<Alert?> GetAlertAsync(long id);
     
     Task<IEnumerable<Alert>> GetAlertsAsync();
 

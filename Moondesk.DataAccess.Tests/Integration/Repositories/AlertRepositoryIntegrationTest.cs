@@ -95,6 +95,9 @@ public class AlertRepositoryIntegrationTest : IClassFixture<TimescaleDbTestConta
 
             var results = await repository.GetAlertsBySensorAsync(sensor.Id);
 
+            results = results as Alert[] ?? results.ToArray();
+            
+            results.Should().NotBeNull();
             results.Should().HaveCountGreaterThan(1);
             results.Should().AllSatisfy(a => a.SensorId.Should().Be(sensor.Id));
         }
@@ -133,6 +136,7 @@ public class AlertRepositoryIntegrationTest : IClassFixture<TimescaleDbTestConta
             await repository.UpdateAlertAsync(alert.Id, alert);
 
             var updated = await repository.GetAlertAsync(alert.Id);
+            updated.Should().NotBeNull();
             updated.Acknowledged.Should().BeTrue();
             updated.AcknowledgedBy.Should().Be("test-user");
         }

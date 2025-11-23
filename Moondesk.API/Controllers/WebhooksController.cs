@@ -56,36 +56,36 @@ public class WebhooksController : ControllerBase
         var webhook = JsonSerializer.Deserialize<ClerkWebhookEvent>(payload);
         if (webhook == null) return BadRequest();
 
-        _logger.LogInformation("Received webhook with ID {Id} and event type {EventType}", webhook.data.TryGetProperty("id", out var id) ? id.GetString() : "unknown", webhook.type);
+        _logger.LogInformation("Received webhook with ID {Id} and event type {EventType}", webhook.Data.TryGetProperty("id", out var id) ? id.GetString() : "unknown", webhook.Type);
 
-        switch (webhook.type)
+        switch (webhook.Type)
         {
             case "user.created":
-                await HandleUserCreated(webhook.data);
+                await HandleUserCreated(webhook.Data);
                 break;
             case "user.updated":
-                await HandleUserUpdated(webhook.data);
+                await HandleUserUpdated(webhook.Data);
                 break;
             case "user.deleted":
-                await HandleUserDeleted(webhook.data);
+                await HandleUserDeleted(webhook.Data);
                 break;
             case "organization.created":
-                await HandleOrganizationCreated(webhook.data);
+                await HandleOrganizationCreated(webhook.Data);
                 break;
             case "organization.updated":
-                await HandleOrganizationUpdated(webhook.data);
+                await HandleOrganizationUpdated(webhook.Data);
                 break;
             case "organization.deleted":
-                await HandleOrganizationDeleted(webhook.data);
+                await HandleOrganizationDeleted(webhook.Data);
                 break;
             case "organizationMembership.created":
-                await HandleMembershipCreated(webhook.data);
+                await HandleMembershipCreated(webhook.Data);
                 break;
             case "organizationMembership.updated":
-                await HandleMembershipUpdated(webhook.data);
+                await HandleMembershipUpdated(webhook.Data);
                 break;
             case "organizationMembership.deleted":
-                await HandleMembershipDeleted(webhook.data);
+                await HandleMembershipDeleted(webhook.Data);
                 break;
         }
 
@@ -118,9 +118,9 @@ public class WebhooksController : ControllerBase
         var user = await _userRepository.GetByIdAsync(userId);
         if (user == null) return;
 
-        if (data.TryGetProperty("first_name", out var fn) && fn.GetString() is string first)
+        if (data.TryGetProperty("first_name", out var fn) && fn.GetString() is { } first)
             user.FirstName = first;
-        if (data.TryGetProperty("last_name", out var ln) && ln.GetString() is string last)
+        if (data.TryGetProperty("last_name", out var ln) && ln.GetString() is {} last)
             user.LastName = last;
 
         await _userRepository.UpdateAsync(user);
@@ -148,7 +148,7 @@ public class WebhooksController : ControllerBase
         var org = await _organizationRepository.GetByIdAsync(orgId);
         if (org == null) return;
 
-        if (data.TryGetProperty("name", out var name) && name.GetString() is string orgName)
+        if (data.TryGetProperty("name", out var name) && name.GetString() is { } orgName)
             org.Name = orgName;
 
         await _organizationRepository.UpdateAsync(org);
@@ -234,7 +234,7 @@ public class WebhooksController : ControllerBase
 
     private class ClerkWebhookEvent
     {
-        public string type { get; set; } = "";
-        public JsonElement data { get; set; }
+        public string Type { get; set; } = "";
+        public JsonElement Data { get; set; }
     }
 }

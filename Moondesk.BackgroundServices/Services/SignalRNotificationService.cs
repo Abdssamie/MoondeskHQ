@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Logging;
 using Moondesk.Domain.Interfaces.Services;
 using Moondesk.Domain.Models.IoT;
 
@@ -7,11 +6,11 @@ namespace Moondesk.BackgroundServices.Services;
 
 public class SignalRNotificationService : INotificationService
 {
-    private readonly IHubContext<Moondesk.API.Hubs.SensorDataHub> _hubContext;
+    private readonly IHubContext<API.Hubs.SensorDataHub> _hubContext;
     private readonly ILogger<SignalRNotificationService> _logger;
 
     public SignalRNotificationService(
-        IHubContext<Moondesk.API.Hubs.SensorDataHub> hubContext,
+        IHubContext<API.Hubs.SensorDataHub> hubContext,
         ILogger<SignalRNotificationService> logger)
     {
         _hubContext = hubContext;

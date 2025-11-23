@@ -48,14 +48,14 @@ public class AlertsController : BaseApiController
         return Ok(alert);
     }
 
-    [HttpGet("by_sensor/{sensor_id}")]
+    [HttpGet("by_sensor/{sensorId}")]
     [SwaggerOperation(Summary = "Get alerts by sensor", Description = "Get all alerts for a specific sensor")]
     [SwaggerResponse(200, "Success")]
-    public async Task<IActionResult> GetBySensor(long sensor_id)
+    public async Task<IActionResult> GetBySensor(long sensorId)
     {
         if (!HasOrganization()) return Unauthorized();
         
-        var alerts = await _alertRepository.GetAlertsBySensorAsync(sensor_id);
+        var alerts = await _alertRepository.GetAlertsBySensorAsync(sensorId);
         return Ok(alerts);
     }
 

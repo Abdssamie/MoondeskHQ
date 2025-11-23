@@ -33,7 +33,7 @@ public class ClerkAuthenticationMiddleware
 
         var options = new AuthenticateRequestOptions(
             secretKey: _secretKey,
-            authorizedParties: new[] { "" }
+            authorizedParties: [""]
         );
 
         var requestState = await AuthenticateRequest.AuthenticateRequestAsync(

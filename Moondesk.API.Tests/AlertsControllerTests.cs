@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -20,9 +19,14 @@ public class AlertsControllerTests
         _mockRepo = new Mock<IAlertRepository>();
         _controller = new AlertsController(_mockRepo.Object);
         
-        var httpContext = new DefaultHttpContext();
-        httpContext.Items["UserId"] = TestUserId;
-        httpContext.Items["OrganizationId"] = TestOrgId;
+        var httpContext = new DefaultHttpContext
+        {
+            Items =
+            {
+                ["UserId"] = TestUserId,
+                ["OrganizationId"] = TestOrgId
+            }
+        };
         _controller.ControllerContext = new ControllerContext
         {
             HttpContext = httpContext
@@ -41,11 +45,11 @@ public class AlertsControllerTests
         _mockRepo.Setup(r => r.GetAlertsAsync()).ReturnsAsync(alerts);
 
         // Act
-        var result = await _controller.GetAll(null);
+        var result = await _controller.GetAll();
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnedAlerts = Assert.IsAssignableFrom<IEnumerable<Alert>>(okResult.Value);
+        var returnedAlerts = Assert.IsType<IEnumerable<Alert>>(okResult.Value, exactMatch: false);
         Assert.Equal(2, returnedAlerts.Count());
     }
 
@@ -65,9 +69,10 @@ public class AlertsControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnedAlerts = Assert.IsAssignableFrom<IEnumerable<Alert>>(okResult.Value);
-        Assert.Single(returnedAlerts);
-        Assert.False(returnedAlerts.First().Acknowledged);
+        var returnedAlerts = Assert.IsType<IEnumerable<Alert>>(okResult.Value, exactMatch: false);
+        var collection = returnedAlerts as Alert[] ?? returnedAlerts.ToArray();
+        Assert.Single(collection);
+        Assert.False(collection.First().Acknowledged);
     }
 
     [Fact]
@@ -76,16 +81,17 @@ public class AlertsControllerTests
         // Arrange
         var alerts = new List<Alert>
         {
-            new() { Id = 1, SensorId = 5, OrganizationId = TestOrgId }
+            new() { Id = 1, SensorId = 5, OrganizationId = TestOrgId },
+            new() { Id = 1, SensorId = 0, OrganizationId = TestOrgId }
         };
-        _mockRepo.Setup(r => r.GetAlertsBySensorAsync(5)).ReturnsAsync(alerts);
+        _mockRepo.Setup(r => r.GetAlertsBySensorAsync(5)).ReturnsAsync(alerts.GetRange(0,1));
 
-        // Act
+    // Act
         var result = await _controller.GetBySensor(5);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnedAlerts = Assert.IsAssignableFrom<IEnumerable<Alert>>(okResult.Value);
+        var returnedAlerts = Assert.IsType<IEnumerable<Alert>>(okResult.Value, exactMatch: false);
         Assert.Single(returnedAlerts);
     }
 
@@ -111,9 +117,7 @@ public class AlertsControllerTests
     public async Task Acknowledge_ReturnsNotFound_WhenAlertDoesNotExist()
     {
         // Arrange
-#pragma warning disable CS8620
         _mockRepo.Setup(r => r.GetAlertAsync(999)).ReturnsAsync(null as Alert);
-#pragma warning restore CS8620
 
         // Act
         var result = await _controller.Acknowledge(999);
