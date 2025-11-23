@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Models;
+using Moondesk.Domain.Enums;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -9,24 +12,31 @@ using System.Text.Json;
 namespace Moondesk.API.Controllers;
 
 [ApiController]
-[Route("api/webhooks")]
+[Route("api/v1/webhooks")]
+[EnableRateLimiting("webhook")]
 public class WebhooksController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
     private readonly IOrganizationRepository _organizationRepository;
+    private readonly IOrganizationMembershipRepository _membershipRepository;
     private readonly IConfiguration _configuration;
+    private readonly ILogger<WebhooksController> _logger;
 
     public WebhooksController(
         IUserRepository userRepository,
         IOrganizationRepository organizationRepository,
-        IConfiguration configuration)
+        IOrganizationMembershipRepository membershipRepository,
+        IConfiguration configuration,
+        ILogger<WebhooksController> logger)
     {
         _userRepository = userRepository;
         _organizationRepository = organizationRepository;
+        _membershipRepository = membershipRepository;
         _configuration = configuration;
+        _logger = logger;
     }
 
-    [HttpPost("clerk")]
+    [HttpPost]
     public async Task<IActionResult> ClerkWebhook()
     {
         var webhookSecret = _configuration["Clerk:WebhookSecret"];
@@ -46,6 +56,8 @@ public class WebhooksController : ControllerBase
         var webhook = JsonSerializer.Deserialize<ClerkWebhookEvent>(payload);
         if (webhook == null) return BadRequest();
 
+        _logger.LogInformation("Received webhook with ID {Id} and event type {EventType}", webhook.data.TryGetProperty("id", out var id) ? id.GetString() : "unknown", webhook.type);
+
         switch (webhook.type)
         {
             case "user.created":
@@ -54,15 +66,30 @@ public class WebhooksController : ControllerBase
             case "user.updated":
                 await HandleUserUpdated(webhook.data);
                 break;
+            case "user.deleted":
+                await HandleUserDeleted(webhook.data);
+                break;
             case "organization.created":
                 await HandleOrganizationCreated(webhook.data);
                 break;
             case "organization.updated":
                 await HandleOrganizationUpdated(webhook.data);
                 break;
+            case "organization.deleted":
+                await HandleOrganizationDeleted(webhook.data);
+                break;
+            case "organizationMembership.created":
+                await HandleMembershipCreated(webhook.data);
+                break;
+            case "organizationMembership.updated":
+                await HandleMembershipUpdated(webhook.data);
+                break;
+            case "organizationMembership.deleted":
+                await HandleMembershipDeleted(webhook.data);
+                break;
         }
 
-        return Ok();
+        return Ok(new { message = "Webhook received" });
     }
 
     private async Task HandleUserCreated(JsonElement data)
@@ -125,6 +152,71 @@ public class WebhooksController : ControllerBase
             org.Name = orgName;
 
         await _organizationRepository.UpdateAsync(org);
+    }
+
+
+    private async Task HandleUserDeleted(JsonElement data)
+    {
+        var userId = data.GetProperty("id").GetString()!;
+        var user = await _userRepository.GetByIdAsync(userId);
+        if (user != null)
+        {
+            await _userRepository.DeleteAsync(userId);
+            _logger.LogInformation("Deleted user {UserId}", userId);
+        }
+    }
+
+    private async Task HandleOrganizationDeleted(JsonElement data)
+    {
+        var orgId = data.GetProperty("id").GetString()!;
+        var org = await _organizationRepository.GetByIdAsync(orgId);
+        if (org != null)
+        {
+            await _organizationRepository.DeleteAsync(orgId);
+            _logger.LogInformation("Deleted organization {OrgId}", orgId);
+        }
+    }
+
+    private async Task HandleMembershipCreated(JsonElement data)
+    {
+        var orgId = data.GetProperty("organization").GetProperty("id").GetString()!;
+        var userId = data.GetProperty("public_user_data").GetProperty("user_id").GetString()!;
+        var role = data.GetProperty("role").GetString()!;
+
+        var membership = new OrganizationMembership
+        {
+            UserId = userId,
+            OrganizationId = orgId,
+            Role = role == "admin" ? UserRole.Admin : UserRole.User,
+            JoinedAt = DateTime.UtcNow
+        };
+
+        await _membershipRepository.CreateAsync(membership);
+        _logger.LogInformation("Created membership for user {UserId} in org {OrgId} with role {Role}", userId, orgId, membership.Role);
+    }
+
+    private async Task HandleMembershipUpdated(JsonElement data)
+    {
+        var orgId = data.GetProperty("organization").GetProperty("id").GetString()!;
+        var userId = data.GetProperty("public_user_data").GetProperty("user_id").GetString()!;
+        var role = data.GetProperty("role").GetString()!;
+
+        var membership = await _membershipRepository.GetByIdAsync(userId, orgId);
+        if (membership != null)
+        {
+            membership.Role = role == "admin" ? UserRole.Admin : UserRole.User;
+            await _membershipRepository.UpdateAsync(membership);
+            _logger.LogInformation("Updated membership for user {UserId} in org {OrgId} to role {Role}", userId, orgId, membership.Role);
+        }
+    }
+
+    private async Task HandleMembershipDeleted(JsonElement data)
+    {
+        var orgId = data.GetProperty("organization").GetProperty("id").GetString()!;
+        var userId = data.GetProperty("public_user_data").GetProperty("user_id").GetString()!;
+
+        await _membershipRepository.DeleteAsync(userId, orgId);
+        _logger.LogInformation("Deleted membership for user {UserId} from org {OrgId}", userId, orgId);
     }
 
     private bool VerifyWebhook(string payload, string signature, string secret)
