@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moondesk.API.Tests", "Moond
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moondesk.BackgroundServices", "Moondesk.BackgroundServices\Moondesk.BackgroundServices.csproj", "{136BDE41-6514-41F5-9FFD-7AEE112A8D53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moondesk.BackgroundServices.Tests", "Moondesk.BackgroundServices.Tests\Moondesk.BackgroundServices.Tests.csproj", "{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +124,18 @@ Global
 		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Release|x64.Build.0 = Release|Any CPU
 		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Release|x86.ActiveCfg = Release|Any CPU
 		{136BDE41-6514-41F5-9FFD-7AEE112A8D53}.Release|x86.Build.0 = Release|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Debug|x64.Build.0 = Debug|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Debug|x86.Build.0 = Debug|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Release|x64.ActiveCfg = Release|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Release|x64.Build.0 = Release|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Release|x86.ActiveCfg = Release|Any CPU
+		{EF9A3A34-8E94-45E2-8929-0A073DFFCBA2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
