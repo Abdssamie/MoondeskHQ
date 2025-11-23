@@ -155,8 +155,8 @@ public class AlertRepositoryIntegrationTest : IClassFixture<TimescaleDbTestConta
 
             await repository.DeleteAlertAsync(alert.Id);
 
-            var act = async () => await repository.GetAlertAsync(alert.Id);
-            await act.Should().ThrowAsync<ArgumentException>();
+            var result = await repository.GetAlertAsync(alert.Id);
+            result.Should().BeNull();
         }
     }
 

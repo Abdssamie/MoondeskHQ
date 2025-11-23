@@ -137,7 +137,7 @@ public class OrganizationRepository : IOrganizationRepository
 
             var existing = await _context.Organizations.FindAsync(organization.Id);
             if (existing == null)
-                throw new OrganizationNotFoundException(organization.Id);
+                return organization;
 
             _context.Entry(existing).CurrentValues.SetValues(organization);
             await _context.SaveChangesAsync();
@@ -160,7 +160,7 @@ public class OrganizationRepository : IOrganizationRepository
         {
             var organization = await _context.Organizations.FindAsync(id);
             if (organization == null)
-                throw new OrganizationNotFoundException(id);
+                return;
 
             _logger.LogWarning("Deleting organization: {OrganizationId}", id);
 

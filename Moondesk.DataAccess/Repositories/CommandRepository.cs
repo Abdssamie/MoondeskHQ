@@ -111,7 +111,7 @@ public class CommandRepository : ICommandRepository
         {
             var existing = await _context.Commands.FindAsync(command.Id);
             if (existing == null)
-                throw new ArgumentException($"Command with ID {command.Id} not found");
+                return;
 
             _context.Entry(existing).CurrentValues.SetValues(command);
             await _context.SaveChangesAsync();
@@ -129,7 +129,7 @@ public class CommandRepository : ICommandRepository
         {
             var command = await _context.Commands.FindAsync(id);
             if (command == null)
-                throw new ArgumentException($"Command with ID {id} not found");
+                return;
 
             _context.Commands.Remove(command);
             await _context.SaveChangesAsync();

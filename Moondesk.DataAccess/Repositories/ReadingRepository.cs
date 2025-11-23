@@ -22,7 +22,7 @@ public class ReadingRepository : IReadingRepository
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async Task<Reading> GetReadingAsync(long sensorId, DateTimeOffset timestamp)
+    public async Task<Reading?> GetReadingAsync(long sensorId, DateTimeOffset timestamp)
     {
         try
         {
@@ -30,7 +30,7 @@ public class ReadingRepository : IReadingRepository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.SensorId == sensorId && r.Timestamp == timestamp);
             
-            return reading ?? throw new ArgumentException($"Reading for sensor {sensorId} at {timestamp} not found");
+            return reading;
         }
         catch (Exception ex)
         {
@@ -81,7 +81,7 @@ public class ReadingRepository : IReadingRepository
             var existing = await _context.Readings
                 .FirstOrDefaultAsync(r => r.SensorId == sensorId && r.Timestamp == timestamp);
             if (existing == null)
-                throw new ArgumentException($"Reading for sensor {sensorId} at {timestamp} not found");
+                return reading;
 
             _context.Entry(existing).CurrentValues.SetValues(reading);
             await _context.SaveChangesAsync();
@@ -102,7 +102,7 @@ public class ReadingRepository : IReadingRepository
             var reading = await _context.Readings
                 .FirstOrDefaultAsync(r => r.SensorId == sensorId && r.Timestamp == timestamp);
             if (reading == null)
-                throw new ArgumentException($"Reading for sensor {sensorId} at {timestamp} not found");
+                return;
 
             _context.Readings.Remove(reading);
             await _context.SaveChangesAsync();

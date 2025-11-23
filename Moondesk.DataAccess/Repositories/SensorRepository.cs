@@ -132,9 +132,8 @@ public class SensorRepository : ISensorRepository
         {
             var existing = await _context.Sensors.FindAsync(sensor.Id);
             if (existing == null)
-                throw new ArgumentException($"Sensor with ID {sensor.Id} not found");
+                return;
 
-            // Update properties
             existing.Name = sensor.Name;
             existing.Type = sensor.Type;
             existing.Unit = sensor.Unit;
@@ -163,7 +162,7 @@ public class SensorRepository : ISensorRepository
         {
             var sensor = await _context.Sensors.FindAsync(id);
             if (sensor == null)
-                throw new ArgumentException($"Sensor with ID {id} not found");
+                return;
 
             _logger.LogWarning("Deleting sensor: {SensorId}", id);
 

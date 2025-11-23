@@ -183,8 +183,8 @@ public class ReadingRepositoryIntegrationTests : IClassFixture<TimescaleDbTestCo
 
             await repository.DeleteReadingAsync(reading.SensorId, reading.Timestamp);
 
-            var act = async () => await repository.GetReadingAsync(reading.SensorId, reading.Timestamp);
-            await act.Should().ThrowAsync<ArgumentException>();
+            var result = await repository.GetReadingAsync(reading.SensorId, reading.Timestamp);
+            result.Should().BeNull();
         }
     }
 }

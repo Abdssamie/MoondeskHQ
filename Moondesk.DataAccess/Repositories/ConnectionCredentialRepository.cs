@@ -170,7 +170,7 @@ public class ConnectionCredentialRepository : IConnectionCredentialRepository
 
             var existing = await _context.ConnectionCredentials.FindAsync(credential.Id);
             if (existing == null)
-                throw new ConnectionCredentialNotFoundException(credential.Id);
+                return credential;
 
             _context.Entry(existing).CurrentValues.SetValues(credential);
             await _context.SaveChangesAsync();
@@ -190,7 +190,7 @@ public class ConnectionCredentialRepository : IConnectionCredentialRepository
         {
             var credential = await _context.ConnectionCredentials.FindAsync(id);
             if (credential == null)
-                throw new ConnectionCredentialNotFoundException(id);
+                return;
 
             _logger.LogWarning("Deleting connection credential: {CredentialId}", id);
 

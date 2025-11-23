@@ -111,9 +111,8 @@ public class AssetRepository : IAssetRepository
         {
             var existing = await _context.Assets.FindAsync(asset.Id);
             if (existing == null)
-                throw new ArgumentException($"Asset with ID {asset.Id} not found");
+                return;
 
-            // Update properties
             existing.Name = asset.Name;
             existing.Type = asset.Type;
             existing.Location = asset.Location;
@@ -140,7 +139,7 @@ public class AssetRepository : IAssetRepository
         {
             var asset = await _context.Assets.FindAsync(id);
             if (asset == null)
-                throw new ArgumentException($"Asset with ID {id} not found");
+                return;
 
             _logger.LogWarning("Deleting asset: {AssetId}", id);
 

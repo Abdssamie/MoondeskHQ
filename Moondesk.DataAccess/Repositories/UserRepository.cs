@@ -186,7 +186,7 @@ public class UserRepository : IUserRepository
 
             var existingUser = await _context.Users.FindAsync(user.Id);
             if (existingUser == null)
-                throw new UserNotFoundException(user.Id);
+                return user;
 
             _logger.LogInformation("Updating user: {UserId}", user.Id);
 
@@ -217,7 +217,7 @@ public class UserRepository : IUserRepository
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
-                throw new UserNotFoundException(id);
+                return;
 
             _logger.LogWarning("Deleting user: {UserId}", id);
 

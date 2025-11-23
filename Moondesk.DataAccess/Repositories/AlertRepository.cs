@@ -100,7 +100,7 @@ public class AlertRepository : IAlertRepository
         {
             var existing = await _context.Alerts.FindAsync(id);
             if (existing == null)
-                throw new ArgumentException($"Alert with ID {id} not found");
+                return alert;
 
             _context.Entry(existing).CurrentValues.SetValues(alert);
             await _context.SaveChangesAsync();
@@ -120,7 +120,7 @@ public class AlertRepository : IAlertRepository
         {
             var alert = await _context.Alerts.FindAsync(id);
             if (alert == null)
-                throw new ArgumentException($"Alert with ID {id} not found");
+                return;
 
             _context.Alerts.Remove(alert);
             await _context.SaveChangesAsync();

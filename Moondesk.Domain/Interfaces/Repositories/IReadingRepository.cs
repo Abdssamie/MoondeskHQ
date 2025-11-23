@@ -5,7 +5,7 @@ namespace Moondesk.Domain.Interfaces.Repositories;
 
 public interface IReadingRepository
 {
-    Task<Reading> GetReadingAsync(long sensorId, DateTimeOffset timestamp);
+    Task<Reading?> GetReadingAsync(long sensorId, DateTimeOffset timestamp);
     
     Task<IEnumerable<Reading>> GetReadingsAsync();
     
