@@ -68,7 +68,7 @@ public class AuthorizationHandlerTests
         var user = new ClaimsPrincipal(new ClaimsIdentity(claims));
         var context = new AuthorizationHandlerContext(new[] { requirement }, user, null);
 
-        _membershipRepo.Setup(r => r.GetByIdAsync("user_123", "org_123")).ReturnsAsync((OrganizationMembership)null);
+        _membershipRepo.Setup(r => r.GetByIdAsync("user_123", "org_123")).ReturnsAsync((OrganizationMembership?)null);
 
         // Act
         await handler.HandleAsync(context);
@@ -169,7 +169,7 @@ public class AuthorizationHandlerTests
         var user = new ClaimsPrincipal(new ClaimsIdentity(claims));
         var context = new AuthorizationHandlerContext(new[] { requirement }, user, null);
 
-        _membershipRepo.Setup(r => r.GetByIdAsync("user_123", "org_123")).ReturnsAsync((OrganizationMembership)null);
+        _membershipRepo.Setup(r => r.GetByIdAsync("user_123", "org_123")).ReturnsAsync((OrganizationMembership?)null);
 
         // Act
         await handler.HandleAsync(context);
