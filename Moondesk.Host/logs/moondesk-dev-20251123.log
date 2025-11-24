@@ -1,0 +1,151 @@
+[2025-11-23 23:31:22.030 +01:00 INF] : Development logging configured {"MachineName":"fedora","ProcessId":68845,"ThreadId":1}
+[2025-11-23 23:31:22.428 +01:00 FTL] : Host application terminated unexpectedly {"MachineName":"fedora","ProcessId":68845,"ThreadId":1}
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.IAuthorizationService Lifetime: Transient ImplementationType: Microsoft.AspNetCore.Authorization.DefaultAuthorizationServiceImpl': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.IAuthorizationHandlerProvider Lifetime: Transient ImplementationType: Microsoft.AspNetCore.Authorization.DefaultAuthorizationHandlerProvider': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.Policy.IPolicyEvaluator Lifetime: Transient ImplementationType: Microsoft.AspNetCore.Authorization.Policy.PolicyEvaluator': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.IAuthorizationHandler Lifetime: Singleton ImplementationType: Moondesk.API.Authorization.OrganizationMemberHandler': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.IAuthorizationHandler Lifetime: Singleton ImplementationType: Moondesk.API.Authorization.OrganizationAdminHandler': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.IAuthorizationService Lifetime: Transient ImplementationType: Microsoft.AspNetCore.Authorization.DefaultAuthorizationServiceImpl': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitIEnumerable(IEnumerableCallSite enumerableCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitNoCache(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitDisposeCache(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitDisposeCache(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in /home/abdssamie/RiderProjects/Moondesk/Moondesk.Host/Program.cs:line 131
+ ---> (Inner Exception #1) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.IAuthorizationHandlerProvider Lifetime: Transient ImplementationType: Microsoft.AspNetCore.Authorization.DefaultAuthorizationHandlerProvider': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitIEnumerable(IEnumerableCallSite enumerableCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitNoCache(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitDisposeCache(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #2) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.Policy.IPolicyEvaluator Lifetime: Transient ImplementationType: Microsoft.AspNetCore.Authorization.Policy.PolicyEvaluator': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitIEnumerable(IEnumerableCallSite enumerableCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitNoCache(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitDisposeCache(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitDisposeCache(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitDisposeCache(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #3) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.IAuthorizationHandler Lifetime: Singleton ImplementationType: Moondesk.API.Authorization.OrganizationMemberHandler': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #4) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Authorization.IAuthorizationHandler Lifetime: Singleton ImplementationType: Moondesk.API.Authorization.OrganizationAdminHandler': Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+ ---> System.InvalidOperationException: Cannot consume scoped service 'Moondesk.Domain.Interfaces.Repositories.IOrganizationMembershipRepository' from singleton 'Microsoft.AspNetCore.Authorization.IAuthorizationHandler'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteValidator.VisitCallSite(ServiceCallSite callSite, CallSiteValidatorState argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+[2025-11-23 23:35:39.560 +01:00 INF] : Development logging configured {"MachineName":"fedora","ProcessId":69970,"ThreadId":1}
+[2025-11-23 23:35:40.055 +01:00 INF] : Development environment detected - Swagger enabled {"MachineName":"fedora","ProcessId":69970,"ThreadId":1}
+[2025-11-23 23:35:42.629 +01:00 WRN] Microsoft.EntityFrameworkCore.Model.Validation: Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"MachineName":"fedora","ProcessId":69970,"ThreadId":1}
+[2025-11-23 23:35:43.514 +01:00 ERR] Microsoft.EntityFrameworkCore.Database.Connection: An error occurred using the connection to database 'moondeskdb' on server 'tcp://localhost:5433'. {"EventId":{"Id":20004,"Name":"Microsoft.EntityFrameworkCore.Database.Connection.ConnectionError"},"MachineName":"fedora","ProcessId":69970,"ThreadId":6}
+[2025-11-23 23:35:43.532 +01:00 ERR] : Database initialization failed {"MachineName":"fedora","ProcessId":69970,"ThreadId":6}
+Npgsql.NpgsqlException (0x80004005): Failed to connect to 127.0.0.1:5433
+ ---> System.Net.Sockets.SocketException (111): Connection refused
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.CreateException(SocketError error, Boolean forAsyncThrow)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ConnectAsync(Socket socket, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.ConnectAsync(EndPoint remoteEP, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.<>c__DisplayClass222_0.<ConnectAsync>g__ConnectAsync|2(CancellationToken ct)
+   at Npgsql.TaskTimeoutAndCancellation.ExecuteAsync(Func`2 getTaskFunc, NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+   at Npgsql.TaskTimeoutAndCancellation.ExecuteAsync(Func`2 getTaskFunc, NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.<ConnectAsync>g__OpenSocketConnectionAsync|222_1(Socket socket, EndPoint endpoint, NpgsqlTimeout perIpTimeout, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.ConnectAsync(NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)
+   at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext()
+   at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction(IAsyncStateMachineBox box, Boolean allowInlining)
+   at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+   at System.Threading.Tasks.Task.TrySetException(Object exceptionObject)
+   at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetException(Exception exception, Task`1& taskField)
+   at Npgsql.TaskTimeoutAndCancellation.ExecuteAsync(Func`2 getTaskFunc, NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)
+   at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext()
+   at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction(IAsyncStateMachineBox box, Boolean allowInlining)
+   at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+   at System.Threading.Tasks.Task.TrySetException(Object exceptionObject)
+   at System.Threading.Tasks.Task.CancellationPromise`1.System.Threading.Tasks.ITaskCompletionAction.Invoke(Task completingTask)
+   at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+   at System.Threading.Tasks.Task.TrySetException(Object exceptionObject)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+   at System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1.SetResult(TResult result)
+   at System.Net.Sockets.SocketAsyncContext.ConnectOperation.InvokeCallback(Boolean allowPooling)
+   at System.Net.Sockets.SocketAsyncEngine.System.Threading.IThreadPoolWorkItem.Execute()
+   at System.Threading.ThreadPoolWorkQueue.Dispatch()
+   at System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()
+   at System.Threading.Thread.StartCallback()
+--- End of stack trace from previous location ---
+   at Npgsql.TaskTimeoutAndCancellation.ExecuteAsync(Func`2 getTaskFunc, NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.ConnectAsync(NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.ConnectAsync(NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|214_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.HistoryRepository.GetAppliedMigrationsAsync(CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlHistoryRepository.GetAppliedMigrationsAsync(CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in /home/abdssamie/RiderProjects/Moondesk/Moondesk.Host/Program.cs:line 147
+[2025-11-23 23:35:43.846 +01:00 INF] : Moondesk Host application starting on Development... {"MachineName":"fedora","ProcessId":69970,"ThreadId":6}
+[2025-11-23 23:35:44.028 +01:00 INF] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5008 {"EventId":{"Id":14,"Name":"ListeningOnAddress"},"MachineName":"fedora","ProcessId":69970,"ThreadId":6}
+[2025-11-23 23:35:44.032 +01:00 INF] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down. {"MachineName":"fedora","ProcessId":69970,"ThreadId":6}
+[2025-11-23 23:35:44.033 +01:00 INF] Microsoft.Hosting.Lifetime: Hosting environment: Development {"MachineName":"fedora","ProcessId":69970,"ThreadId":6}
+[2025-11-23 23:35:44.033 +01:00 INF] Microsoft.Hosting.Lifetime: Content root path: /home/abdssamie/RiderProjects/Moondesk/Moondesk.Host {"MachineName":"fedora","ProcessId":69970,"ThreadId":6}
+[2025-11-23 23:37:43.130 +01:00 INF] Microsoft.Hosting.Lifetime: Application is shutting down... {"MachineName":"fedora","ProcessId":69970,"ThreadId":18}

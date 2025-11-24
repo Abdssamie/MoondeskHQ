@@ -132,6 +132,12 @@ public class WebhooksController : ControllerBase
         var name = data.GetProperty("name").GetString()!;
         var createdBy = data.GetProperty("created_by").GetString()!;
 
+        if (await _organizationRepository.ExistsAsync(orgId))
+        {
+            _logger.LogWarning("Organization {OrgId} already exists. Skipping creation.", orgId);
+            return;
+        }
+
         var org = new Organization
         {
             Id = orgId,

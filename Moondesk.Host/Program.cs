@@ -42,6 +42,9 @@ try
     // Register notification service
     builder.Services.AddSingleton<INotificationService, SignalRNotificationService>();
 
+    // Register Encryption Service
+    builder.Services.AddSingleton<Moondesk.Domain.Interfaces.Services.IEncryptionService, Moondesk.BackgroundServices.Services.EncryptionService>();
+
     // Add SignalR
     builder.Services.AddSignalR();
 
@@ -55,8 +58,8 @@ try
             policy.Requirements.Add(new OrganizationAdminRequirement()));
     });
     
-    builder.Services.AddSingleton<IAuthorizationHandler, OrganizationMemberHandler>();
-    builder.Services.AddSingleton<IAuthorizationHandler, OrganizationAdminHandler>();
+    builder.Services.AddScoped<IAuthorizationHandler, OrganizationMemberHandler>();
+    builder.Services.AddScoped<IAuthorizationHandler, OrganizationAdminHandler>();
 
     // Add API services
     builder.Services.AddControllers()
@@ -116,9 +119,15 @@ try
     {
         options.AddDefaultPolicy(policy =>
         {
-            policy.WithOrigins("http://localhost:3000", "https://yourdomain.com")
+            policy.WithOrigins(
+                    "http://localhost:3000", 
+                    "http://localhost:4200", 
+                    "http://localhost:5173", 
+                    "http://localhost:8080",
+                    "https://yourdomain.com")
                   .AllowAnyMethod()
                   .AllowAnyHeader()
+                  .WithOrigins("http://localhost:5008") // Add the backend's own port
                   .AllowCredentials(); // Required for SignalR
         });
     });

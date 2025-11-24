@@ -22,6 +22,9 @@ try
     
     builder.Services.AddMoondeskDataAccess(connectionString);
     builder.Services.AddRepositories();
+    
+    // Register Encryption Service
+    builder.Services.AddSingleton<Moondesk.Domain.Interfaces.Services.IEncryptionService, Moondesk.BackgroundServices.Services.EncryptionService>();
 
     // Add MQTT ingestion service
     builder.Services.AddHostedService<MqttIngestionService>();

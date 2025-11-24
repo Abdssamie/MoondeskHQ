@@ -4,6 +4,7 @@ using Moondesk.Domain.Interfaces.Repositories;
 using Moondesk.Domain.Interfaces.Services;
 using Moondesk.Domain.Models.IoT;
 using MQTTnet;
+using Microsoft.Extensions.DependencyInjection; // Added for CreateScope
 
 namespace Moondesk.BackgroundServices.Services;
 
@@ -31,14 +32,57 @@ public class MqttIngestionService : BackgroundService
         var factory = new MqttClientFactory();
         _mqttClient = factory.CreateMqttClient();
 
+        string host = _configuration["MQTT:Host"] ?? "localhost";
+        int port = int.Parse(_configuration["MQTT:Port"] ?? "1883");
+        string username = _configuration["MQTT:Username"] ?? "";
+        string password = _configuration["MQTT:Password"] ?? "";
+        string clientId = $"moondesk-ingestion-{Guid.NewGuid()}";
+
+        // Try to load from DB
+        try 
+        {
+            using var scope = _serviceProvider.CreateScope();
+            var credentialRepo = scope.ServiceProvider.GetRequiredService<IConnectionCredentialRepository>();
+            var encryptionService = scope.ServiceProvider.GetRequiredService<IEncryptionService>();
+            var orgRepo = scope.ServiceProvider.GetRequiredService<IOrganizationRepository>();
+
+            // Strategy: Find ANY active MQTT credential. 
+            // In a real multi-tenant system, we might iterate all of them.
+            // For now, we pick the first one we find to support the "Frontend Configured" requirement.
+            
+            var orgs = await orgRepo.GetAllAsync();
+            foreach (var org in orgs)
+            {
+                var creds = await credentialRepo.GetByProtocolAsync(Protocol.Mqtt, org.Id);
+                var activeCred = creds.FirstOrDefault(c => c.IsActive);
+                
+                if (activeCred != null)
+                {
+                    _logger.LogInformation("Found database credential for Organization {OrgId}: {Name}", org.Id, activeCred.Name);
+                    
+                    var uri = new Uri(activeCred.EndpointUri);
+                    host = uri.Host;
+                    port = uri.Port > 0 ? uri.Port : 1883;
+                    username = activeCred.Username;
+                    password = encryptionService.Decrypt(activeCred.EncryptedPassword, activeCred.EncryptionIV);
+                    if (!string.IsNullOrEmpty(activeCred.ClientId))
+                    {
+                        clientId = activeCred.ClientId;
+                    }
+                    
+                    break; // Found one, use it.
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+             _logger.LogError(ex, "Failed to load credentials from database. Falling back to appsettings.");
+        }
+
         var options = new MqttClientOptionsBuilder()
-            .WithTcpServer(
-                _configuration["MQTT:Host"] ?? "localhost",
-                int.Parse(_configuration["MQTT:Port"] ?? "1883"))
-            .WithCredentials(
-                _configuration["MQTT:Username"],
-                _configuration["MQTT:Password"])
-            .WithClientId($"moondesk-ingestion-{Guid.NewGuid()}")
+            .WithTcpServer(host, port)
+            .WithCredentials(username, password)
+            .WithClientId(clientId)
             .WithCleanSession()
             .Build();
 
@@ -97,9 +141,9 @@ public class MqttIngestionService : BackgroundService
                 return;
             }
 
-            if (deviceId == telemetry.SensorId.ToString())
+            if (deviceId != telemetry.SensorId.ToString())
             {
-                _logger.LogInformation("deviceId in topic does not match the sensorId in the payload");
+                _logger.LogWarning("deviceId {DeviceId} in topic does not match the sensorId {SensorId} in the payload", deviceId, telemetry.SensorId);
                 throw new Exception("There is inconsistency between the telemetry topic and the payload");
             }
  

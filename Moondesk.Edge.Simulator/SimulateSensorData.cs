@@ -8,28 +8,30 @@ namespace Moondesk.Edge.Simulator;
 
 public abstract class SensorReadingSimulator
 {
-    private static Sensor _sensor = new Sensor {OrganizationId = "78976" ,Asset = new Asset { Location = "Home" , OrganizationId = "78976"} };
-
-    public static async Task PublishAsync(IMqttClient client)
+    public static async Task PublishAsync(IMqttClient client, string organizationId)
     {
         var random = new Random();
+        var sensor = new Sensor { OrganizationId = organizationId, Asset = new Asset { Location = "Home", OrganizationId = organizationId } };
 
         while (true)
         {
             var reading = new Reading
             {
-                OrganizationId = "78976",
+                OrganizationId = organizationId,
                 Quality = GetReadingQuality(),
-                Sensor = _sensor,
-                SensorId = _sensor.Id,
+                Sensor = sensor,
+                SensorId = sensor.Id,
                 Value = random.NextDouble(),
                 Timestamp = DateTimeOffset.UtcNow,
             };
 
             var payload = JsonSerializer.Serialize(reading);
+            
+            // Topic format must match Backend: {OrganizationId}/{SensorId}/telemetry
+            string topic = $"{reading.OrganizationId}/{reading.SensorId}/telemetry";
 
             var message = new MqttApplicationMessageBuilder()
-                .WithTopic("sensor-reading")
+                .WithTopic(topic)
                 .WithPayload(payload)
                 .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                 .WithRetainFlag(false)
@@ -48,18 +50,19 @@ public abstract class SensorReadingSimulator
         // ReSharper disable once FunctionNeverReturns
     }
 
-    public static async Task SimulateAlert(IMqttClient client)
+    public static async Task SimulateAlert(IMqttClient client, string organizationId)
     {
         var random = new Random();
+        var sensor = new Sensor { OrganizationId = organizationId, Asset = new Asset { Location = "Home", OrganizationId = organizationId } };
 
         while (true)
         {
             var alert = new Alert
             {
-                OrganizationId = "78976",
+                OrganizationId = organizationId,
                 Acknowledged = false,
-                Sensor = _sensor,
-                SensorId = _sensor.Id,
+                Sensor = sensor,
+                SensorId = sensor.Id,
                 Message = "Unknown issue detected",
                 Severity = AlertSeverity.Emergency
             };
